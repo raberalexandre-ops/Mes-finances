@@ -135,7 +135,7 @@
   .kc-sum > div { min-width: 0; }
   .kc-sum .c { text-align: center; }
   .kc-sum .r { text-align: right; }
-  .kc-lb { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); }
+  .kc-lb { font-size: 9px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: var(--text-dim); }
   .kc-lb.red { color: #c0524b; }
   .kc-lb.ok { color: #6aa77c; }
   .kc-val { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-top: 8px; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -1704,6 +1704,7 @@ function renderCalendarSub() {
   const regOut = sched.filter(i => i.type !== 'income' && i.p.recurrence !== 'once').reduce((s, i) => s + i.amount, 0);
   const regIn = sched.filter(i => i.type === 'income' && i.p.recurrence !== 'once').reduce((s, i) => s + i.amount, 0);
   const avail = state.balanceStart + inn;
+  const projBal = avail - out;
   const share = out <= 0 ? 0 : (avail <= 0 ? 100 : Math.min(100, out / avail * 100));
   const byDate = {};
   items.forEach(i => (byDate[i.date] = byDate[i.date] || []).push(i));
@@ -1734,9 +1735,9 @@ function renderCalendarSub() {
   root.innerHTML = `
     <div class="kc-card">
       <div class="kc-sum">
-        <div><div class="kc-lb">Total courant</div><div class="kc-val ink">${eurR(state.balanceStart)}</div></div>
-        <div class="c"><div class="kc-lb red">À venir</div><div class="kc-val red">${eurR(out)}</div></div>
-        <div class="r"><div class="kc-lb ok">Revenu à venir</div><div class="kc-val ok">${eurR(inn)}</div></div>
+        <div><div class="kc-lb">Solde actuel</div><div class="kc-val ink">${eurR(state.balanceStart)}</div></div>
+        <div class="c"><div class="kc-lb red">Dépense prévisionnelle</div><div class="kc-val red">${eurR(out)}</div></div>
+        <div class="r"><div class="kc-lb ${projBal >= 0 ? 'ok' : 'red'}">Solde prévisionnel</div><div class="kc-val ${projBal >= 0 ? 'ok' : 'red'}">${eurR(projBal)}</div></div>
       </div>
       <div class="kc-progress"><div class="hatch" style="width:${share}%"></div><div class="fill"></div></div>
       <div class="kc-grid">${grid}</div>
@@ -3481,18 +3482,25 @@ function renderWizard() {
     const cats = catsFor(w.type);
     body.innerHTML = `<h1 class="wiz-h">${inc ? 'Revenu régulier' : 'Dépense régulière'}</h1>
       <div class="wiz-lab">Nom</div><input id="wizName" class="wiz-line" placeholder="${inc ? 'ex. Salaire' : 'ex. Courses'}" value="${escapeHtml(w.name)}" maxlength="30">
-      <div class="wiz-lab" style="margin-top:22px;">Catégorie</div><div class="wiz-line ro" id="wizCatName">${w.cat ? escapeHtml(findCat(w.cat).label) : 'Choisis une catégorie'}</div>
+      <div class="wiz-lab" style="margin-top:22px;">Catégorie</div><input id="wizCatQ" class="wiz-line" placeholder="Rechercher une catégorie" value="${escapeHtml(w.cat && !w.q ? findCat(w.cat).label : (w.q || ''))}" autocomplete="off">
       <div class="kc-card wiz-cats" id="wizCats"></div>`;
     document.getElementById('wizName').oninput = e => { w.name = e.target.value; };
     const grid = document.getElementById('wizCats');
+    const norm = t => String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    const cells = [];
     cats.forEach(c => {
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 'wiz-cat' + (c.id === w.cat ? ' sel' : '');
       b.innerHTML = `<span class="kc-ico" style="background:${c.color}">${c.icon}</span><span>${escapeHtml(c.label)}</span>`;
-      b.onclick = () => { w.cat = c.id; renderWizard(); };
-      grid.appendChild(b);
+      b.onclick = () => { w.cat = c.id; w.q = ''; renderWizard(); };
+      grid.appendChild(b); cells.push([b, norm(c.label + ' ' + (c.grp ? groupById(c.grp).label : ''))]);
     });
+    const cq = document.getElementById('wizCatQ');
+    const filt = () => { const q = norm(w.q || ''); let n = 0; cells.forEach(([b, t]) => { const ok = !q || t.includes(q); b.style.display = ok ? '' : 'none'; if (ok) n++; }); let e = document.getElementById('wizNone'); if (!n) { if (!e) { e = document.createElement('div'); e.id = 'wizNone'; e.className = 'empty-state'; e.style.gridColumn = '1 / -1'; e.textContent = 'Aucune catégorie trouvée.'; grid.appendChild(e); } } else if (e) e.remove(); };
+    cq.onfocus = () => { if (w.cat && !w.q) cq.select(); };
+    cq.oninput = () => { w.q = cq.value; filt(); };
+    filt();
     next.disabled = !w.cat;
     next.textContent = 'Continuer';
   } else if (w.step === 2) {
