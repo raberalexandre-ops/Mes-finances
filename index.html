@@ -393,6 +393,8 @@
 
   /* ---------- Bottom nav + fab ---------- */
   .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: rgba(253,246,240,0.95); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid #efe4d8; display: flex; padding: 8px 4px calc(8px + env(safe-area-inset-bottom)); z-index: 5; }
+  .bottom-nav { transition: transform .28s ease; }
+  .bottom-nav.hide { transform: translateX(-50%) translateY(110%); }
   .nav-item { flex: 1; background: none; border: none; color: #8d8478; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 9px; font-weight: 600; padding: 4px 0; cursor: pointer; position: relative; }
   .nav-item svg { width: 30px; height: 30px; }
   .nav-item.active { color: #8a6420; font-weight: 800; }
@@ -448,6 +450,42 @@
   /* ---------- Assistant régulier (plein écran) ---------- */
   .wiz { position: fixed; inset: 0; margin: 0 auto; max-width: 480px; background: var(--bg); z-index: 30; display: none; flex-direction: column; }
   .wiz.open { display: flex; }
+  .cat-i { width: 1.05em; height: 1.05em; vertical-align: -0.18em; flex-shrink: 0; }
+  [style*="background"] > .cat-i { color: #fff; }
+  .cv-chip i .cat-i, .cv-ico .cat-i, .kc-ico .cat-i, .bd-ic .cat-i, .ci .cat-i { color: #fff; }
+  .cv-scroll { flex: 1; overflow-y: auto; padding: 0 14px 40px; }
+  .cv-head { display: flex; align-items: center; gap: 10px; padding: 14px 0 12px; }
+  .cv-back { background: none; border: none; color: var(--ink, #2a2218); padding: 6px 4px; cursor: pointer; display: flex; }
+  .cv-back svg { width: 18px; height: 18px; }
+  .cv-ico { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; flex-shrink: 0; }
+  .cv-tt { flex: 1; min-width: 0; }
+  .cv-tt b { display: block; font-size: 17px; font-weight: 800; }
+  .cv-tt span { font-size: 11px; color: #9a9184; font-weight: 600; }
+  .cv-btn { width: 38px; height: 38px; border-radius: 12px; border: none; background: #fff; box-shadow: 0 2px 8px rgba(120,100,60,0.12); display: flex; align-items: center; justify-content: center; font-size: 15px; cursor: pointer; }
+  .cv-btn.del { background: #c0504d; color: #fff; }
+  .cv-card { background: #fff; border-radius: 22px; padding: 16px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(120,100,60,0.08); }
+  .cv-lb { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; color: #a39a8b; }
+  .cv-amt { font-size: 26px; font-weight: 800; margin: 4px 0 10px; display: flex; align-items: center; gap: 8px; }
+  .cv-amt button { background: none; border: none; font-size: 14px; color: #b9ae9a; cursor: pointer; }
+  .cv-bar { height: 7px; border-radius: 4px; background: #f0eadd; overflow: hidden; }
+  .cv-bar i { display: block; height: 100%; border-radius: 4px; }
+  .cv-sub { font-size: 11px; font-weight: 600; color: #8d8478; margin-top: 8px; }
+  .cv-h2 { font-size: 15px; font-weight: 800; margin: 18px 4px 10px; }
+  .cv-list { background: #fff; border-radius: 22px; box-shadow: 0 2px 10px rgba(120,100,60,0.08); overflow: hidden; }
+  .cv-it { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid #f0eadd; }
+  .cv-it .cv-ico { width: 36px; height: 36px; border-radius: 11px; font-size: 16px; }
+  .cv-it .bi { flex: 1; min-width: 0; }
+  .cv-it .bn { font-size: 13px; font-weight: 700; }
+  .cv-it .bs { font-size: 10px; color: #a39a8b; font-weight: 600; margin: 1px 0 5px; }
+  .cv-it .ba { font-size: 13px; font-weight: 800; }
+  .cv-it .x { background: none; border: none; color: #b9ae9a; font-size: 16px; padding: 4px; cursor: pointer; }
+  .cv-add { width: 100%; background: none; border: none; padding: 14px; font-size: 13px; font-weight: 800; color: #9a7a1f; cursor: pointer; }
+  .cv-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .cv-chip { background: #fff; border: none; border-radius: 16px; padding: 8px 12px; display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; color: #9a7a1f; cursor: pointer; }
+  .cv-chip i { font-style: normal; width: 22px; height: 22px; border-radius: 7px; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; }
+  .cv-bedit { display: flex; gap: 8px; margin-bottom: 10px; }
+  .cv-bedit input { flex: 1; min-width: 0; border: 1.5px solid #e7dfcd; border-radius: 12px; padding: 9px 12px; font-size: 14px; background: #faf7f0; outline: none; }
+  .cv-bedit button { border: none; border-radius: 12px; background: #8e6d3a; color: #fff; font-weight: 800; padding: 0 16px; cursor: pointer; }
   .wiz-safe { height: env(safe-area-inset-top); background: #3d7f5c; flex-shrink: 0; }
   .wiz-top { display: flex; align-items: center; gap: 14px; padding: 18px 16px 8px; }
   .wiz-top button { background: none; border: none; color: var(--text-hi); padding: 6px; cursor: pointer; display: flex; }
@@ -770,6 +808,8 @@
 
 <div class="sheet-overlay" id="overlay"></div>
 
+<div class="wiz catv" id="catView"><div class="wiz-safe"></div><div class="cv-scroll" id="cvBody"></div></div>
+
 <div class="wiz" id="wizard">
   <div class="wiz-safe"></div>
   <div class="wiz-top">
@@ -878,28 +918,65 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const DEFAULT_EXPENSE_CATEGORIES = [
-  { id: 'alimentation', label: 'Alimentation', icon: '🍎', color: '#d98a53' },
-  { id: 'transport', label: 'Transport', icon: '🚗', color: '#6c93c2' },
-  { id: 'logement', label: 'Logement', icon: '🏠', color: '#b98fce' },
-  { id: 'epargne', label: 'Épargne', icon: '💸', color: '#d6bfa6' },
-  { id: 'sante', label: 'Santé', icon: '💊', color: '#7fa686' },
-  { id: 'sorties', label: 'Sorties', icon: '🍷', color: '#c2685f' },
-  { id: 'commun', label: 'Commun', icon: '👥', color: '#5fa8a0' },
-  { id: 'shopping', label: 'Shopping', icon: '🛍️', color: '#cf7a9c' },
-  { id: 'tech', label: 'Tech', icon: '💻', color: '#6c93c2' },
-  { id: 'cadeaux', label: 'Cadeaux', icon: '🎁', color: '#b98fce' },
-  { id: 'autre_d', label: 'Autre', icon: '•••', color: '#8b8d93' },
+const CAT_ICONS = {"laptop":"<path d=\"M18 5a2 2 0 0 1 2 2v8.526a2 2 0 0 0 .212.897l1.068 2.127a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45l1.068-2.127A2 2 0 0 0 4 15.526V7a2 2 0 0 1 2-2z\" /> <path d=\"M20.054 15.987H3.946\" />","heart":"<path d=\"M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5\" />","globe":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20\" /> <path d=\"M2 12h20\" />","train-front":"<path d=\"M8 3.1V7a4 4 0 0 0 8 0V3.1\" /> <path d=\"m9 15-1-1\" /> <path d=\"m15 15 1-1\" /> <path d=\"M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z\" /> <path d=\"m8 19-2 3\" /> <path d=\"m16 19 2 3\" />","car-taxi-front":"<path d=\"M10 2h4\" /> <path d=\"m21 8-2 2-1.5-3.7A2 2 0 0 0 15.646 5H8.4a2 2 0 0 0-1.903 1.257L5 10 3 8\" /> <path d=\"M7 14h.01\" /> <path d=\"M17 14h.01\" /> <rect width=\"18\" height=\"8\" x=\"3\" y=\"10\" rx=\"2\" /> <path d=\"M5 18v2\" /> <path d=\"M19 18v2\" />","wrench":"<path d=\"M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z\" />","shopping-cart":"<path d=\"m2.05 2.05 1.099-.028a1 1 0 0 1 1.008.815l2.69 14.347A1 1 0 0 0 7.83 18H18\" /> <path d=\"M4.563 5h16.435a1 1 0 0 1 .981 1.204l-1.026 6.226A2 2 0 0 1 18.962 14H6.25\" /> <circle cx=\"18\" cy=\"20\" r=\"2\" /> <circle cx=\"8\" cy=\"20\" r=\"2\" />","coins":"<path d=\"M13.744 17.736a6 6 0 1 1-7.48-7.48\" /> <path d=\"M15 6h1v4\" /> <path d=\"m6.134 14.768.866-.5 2 3.464\" /> <circle cx=\"16\" cy=\"8\" r=\"6\" />","ellipsis":"<circle cx=\"12\" cy=\"12\" r=\"1\" /> <circle cx=\"19\" cy=\"12\" r=\"1\" /> <circle cx=\"5\" cy=\"12\" r=\"1\" />","cooking-pot":"<path d=\"M2 12h20\" /> <path d=\"M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8\" /> <path d=\"m4 8 16-4\" /> <path d=\"m8.86 6.78-.45-1.81a2 2 0 0 1 1.45-2.43l1.94-.48a2 2 0 0 1 2.43 1.46l.45 1.8\" />","shield":"<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" />","baby":"<path d=\"M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5\" /> <path d=\"M15 12h.01\" /> <path d=\"M19.38 6.813A9 9 0 0 1 20.8 10.2a2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1\" /> <path d=\"M9 12h.01\" />","dumbbell":"<path d=\"M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829z\" /> <path d=\"m2.5 21.5 1.4-1.4\" /> <path d=\"m20.1 3.9 1.4-1.4\" /> <path d=\"M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829z\" /> <path d=\"m9.6 14.4 4.8-4.8\" />","package":"<path d=\"M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z\" /> <path d=\"M12 22V12\" /> <polyline points=\"3.29 7 12 12 20.71 7\" /> <path d=\"m7.5 4.27 9 5.15\" />","pill":"<path d=\"m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z\" /> <path d=\"m8.5 8.5 7 7\" />","file-text":"<path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"M10 9H8\" /> <path d=\"M16 13H8\" /> <path d=\"M16 17H8\" />","ticket":"<path d=\"M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z\" /> <path d=\"M13 5v2\" /> <path d=\"M13 17v2\" /> <path d=\"M13 11v2\" />","circle-parking":"<path d=\"M9 12h4a2 2 0 0 0 0-4H9.5a.5.5 0 0 0-.5.5V16\" /> <circle cx=\"12\" cy=\"12\" r=\"10\" />","martini":"<path d=\"M12 12 4.207 4.207A.707.707 0 0 1 4.707 3h14.586a.707.707 0 0 1 .5 1.207z\" /> <path d=\"M12 12v10\" /> <path d=\"M7 22h10\" />","armchair":"<path d=\"M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3\" /> <path d=\"M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z\" /> <path d=\"M5 18v2\" /> <path d=\"M19 18v2\" />","hand-heart":"<path d=\"M11 14h2a2 2 0 0 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16\" /> <path d=\"m14.45 13.39 5.05-4.694C20.196 8 21 6.85 21 5.75a2.75 2.75 0 0 0-4.797-1.837.276.276 0 0 1-.406 0A2.75 2.75 0 0 0 11 5.75c0 1.2.802 2.248 1.5 2.946L16 11.95\" /> <path d=\"m2 15 6 6\" /> <path d=\"m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a1 1 0 0 0-2.75-2.91\" />","shopping-bag":"<path d=\"M16 10a4 4 0 0 1-8 0\" /> <path d=\"M3.103 6.034h17.794\" /> <path d=\"M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z\" />","truck":"<path d=\"M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2\" /> <path d=\"M15 18H9\" /> <path d=\"M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14\" /> <circle cx=\"17\" cy=\"18\" r=\"2\" /> <circle cx=\"7\" cy=\"18\" r=\"2\" />","zap":"<path d=\"M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z\" />","house":"<path d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\" /> <path d=\"M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\" />","shield-plus":"<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" /> <path d=\"M9 12h6\" /> <path d=\"M12 9v6\" />","shirt":"<path d=\"M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z\" />","clipboard-list":"<rect width=\"8\" height=\"4\" x=\"8\" y=\"2\" rx=\"1\" ry=\"1\" /> <path d=\"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2\" /> <path d=\"M12 11h4\" /> <path d=\"M12 16h4\" /> <path d=\"M8 11h.01\" /> <path d=\"M8 16h.01\" />","gamepad-2":"<line x1=\"6\" x2=\"10\" y1=\"11\" y2=\"11\" /> <line x1=\"8\" x2=\"8\" y1=\"9\" y2=\"13\" /> <line x1=\"15\" x2=\"15.01\" y1=\"12\" y2=\"12\" /> <line x1=\"18\" x2=\"18.01\" y1=\"10\" y2=\"10\" /> <path d=\"M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z\" />","repeat":"<path d=\"m17 2 4 4-4 4\" /> <path d=\"M3 11v-1a4 4 0 0 1 4-4h14\" /> <path d=\"m7 22-4-4 4-4\" /> <path d=\"M21 13v1a4 4 0 0 1-4 4H3\" />","tag":"<path d=\"M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z\" /> <circle cx=\"7.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\" />","car":"<path d=\"M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2\" /> <circle cx=\"7\" cy=\"17\" r=\"2\" /> <path d=\"M9 17h6\" /> <circle cx=\"17\" cy=\"17\" r=\"2\" />","landmark":"<path d=\"M10 18v-7\" /> <path d=\"M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z\" /> <path d=\"M14 18v-7\" /> <path d=\"M18 18v-7\" /> <path d=\"M3 22h18\" /> <path d=\"M6 18v-7\" />","utensils":"<path d=\"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2\" /> <path d=\"M7 2v20\" /> <path d=\"M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7\" />","monitor":"<rect width=\"20\" height=\"14\" x=\"2\" y=\"3\" rx=\"2\" /> <line x1=\"8\" x2=\"16\" y1=\"21\" y2=\"21\" /> <line x1=\"12\" x2=\"12\" y1=\"17\" y2=\"21\" />","graduation-cap":"<path d=\"M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z\" /> <path d=\"M22 10v6\" /> <path d=\"M6 12.5V16a6 3 0 0 0 12 0v-3.5\" />","code-xml":"<path d=\"m18 16 4-4-4-4\" /> <path d=\"m6 8-4 4 4 4\" /> <path d=\"m14.5 4-5 16\" />","plane":"<path d=\"M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z\" />","banknote":"<rect width=\"20\" height=\"12\" x=\"2\" y=\"6\" rx=\"2\" /> <circle cx=\"12\" cy=\"12\" r=\"2\" /> <path d=\"M6 12h.01M18 12h.01\" />","coffee":"<path d=\"M10 2v2\" /> <path d=\"M14 2v2\" /> <path d=\"M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1\" /> <path d=\"M6 2v2\" />","briefcase":"<path d=\"M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16\" /> <rect width=\"20\" height=\"14\" x=\"2\" y=\"6\" rx=\"2\" />","gift":"<path d=\"M12 7v14\" /> <path d=\"M20 11v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8\" /> <path d=\"M7.5 7a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5 1 1 0 0 1 0 5\" /> <rect x=\"3\" y=\"7\" width=\"18\" height=\"4\" rx=\"1\" />","sparkles":"<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\" /> <path d=\"M20 2v4\" /> <path d=\"M22 4h-4\" /> <circle cx=\"4\" cy=\"20\" r=\"2\" />","paw-print":"<circle cx=\"11\" cy=\"4\" r=\"2\" /> <circle cx=\"18\" cy=\"8\" r=\"2\" /> <circle cx=\"20\" cy=\"16\" r=\"2\" /> <path d=\"M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z\" />","monitor-play":"<path d=\"M15.033 9.44a.647.647 0 0 1 0 1.12l-4.065 2.352a.645.645 0 0 1-.968-.56V7.648a.645.645 0 0 1 .967-.56z\" /> <path d=\"M12 17v4\" /> <path d=\"M8 21h8\" /> <rect x=\"2\" y=\"3\" width=\"20\" height=\"14\" rx=\"2\" />","droplet":"<path d=\"M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z\" />","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\" /> <path d=\"M12 18h.01\" />","book-open":"<path d=\"M12 5v16\" /> <path d=\"M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z\" />","fuel":"<path d=\"M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 4 0v-6.998a2 2 0 0 0-.59-1.42L18 5\" /> <path d=\"M14 21V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v16\" /> <path d=\"M2 21h13\" /> <path d=\"M3 9h11\" />","palette":"<path d=\"M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z\" /> <circle cx=\"13.5\" cy=\"6.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"17.5\" cy=\"10.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"6.5\" cy=\"12.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"8.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\" />","shield-check":"<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" /> <path d=\"m9 12 2 2 4-4\" />"};
+function ci(n) { return '<svg class="cat-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (CAT_ICONS[n] || CAT_ICONS.tag) + '</svg>'; }
+const GROUPS = [
+  { id: 'logement', label: 'Logement', ico: 'house', color: '#9a7a10' },
+  { id: 'alimentation', label: 'Alimentation', ico: 'shopping-cart', color: '#1fab96' },
+  { id: 'transport', label: 'Transport', ico: 'car', color: '#0057a8' },
+  { id: 'abonnements', label: 'Télécom & abonnements', ico: 'smartphone', color: '#8b7cf6' },
+  { id: 'sante', label: 'Santé', ico: 'heart', color: '#2e8b7f' },
+  { id: 'famille', label: 'Famille & cadeaux', ico: 'baby', color: '#c77db3' },
+  { id: 'admin', label: 'Banque & administratif', ico: 'landmark', color: '#e84a4a' },
+  { id: 'restauration', label: 'Restauration', ico: 'utensils', color: '#c96a4a' },
+  { id: 'shopping', label: 'Shopping', ico: 'shopping-bag', color: '#a863a0' },
+  { id: 'loisirs', label: 'Loisirs', ico: 'gamepad-2', color: '#8e5fb0' },
+  { id: 'voyages', label: 'Voyages', ico: 'plane', color: '#3f7fa8' },
+  { id: 'scolarite', label: 'Scolarité', ico: 'graduation-cap', color: '#4f7bbf' },
+  { id: 'dettes', label: 'Crédits & dettes', ico: 'landmark', color: '#a0522d' },
+  { id: 'divers', label: 'Divers', ico: 'package', color: '#4f8a9a' },
 ];
+GROUPS.forEach(g => { g.icon = ci(g.ico); });
+function grpOf(cat) { return (cat && cat.grp && GROUPS.some(g => g.id === cat.grp)) ? cat.grp : 'divers'; }
+function groupById(id) { return GROUPS.find(g => g.id === id) || GROUPS[GROUPS.length - 1]; }
+const CAT_DEF = [
+  ['loyer', 'Loyer', 'house', 'logement'], ['credit_immo', 'Crédit immobilier', 'house', 'logement'], ['immobilier', 'Immobilier', 'house', 'logement'],
+  ['charges', 'Charges', 'file-text', 'logement'], ['electricite', 'Électricité', 'zap', 'logement'], ['eau', 'Eau', 'droplet', 'logement'],
+  ['assurance_hab', 'Assurance habitation', 'shield', 'logement'], ['travaux', 'Entretien & travaux', 'wrench', 'logement'], ['mobilier', 'Mobilier & décoration', 'armchair', 'logement'],
+  ['courses', 'Courses', 'shopping-cart', 'alimentation'],
+  ['carburant', 'Carburant', 'fuel', 'transport'], ['credit_auto', 'Crédit auto', 'car', 'transport'], ['assurance_auto', 'Assurance auto', 'shield', 'transport'],
+  ['transports_commun', 'Transports en commun', 'train-front', 'transport'], ['transports', 'Transports', 'car', 'transport'], ['parking', 'Parking & Péages', 'circle-parking', 'transport'],
+  ['entretien_veh', 'Entretien véhicule', 'wrench', 'transport'], ['taxi', 'Taxi/VTC', 'car-taxi-front', 'transport'],
+  ['telephone', 'Téléphone', 'smartphone', 'abonnements'], ['internet', 'Internet', 'globe', 'abonnements'], ['abonnements', 'Abonnements', 'monitor', 'abonnements'],
+  ['streaming', 'Streaming', 'monitor-play', 'abonnements'], ['logiciels', 'Logiciels', 'code-xml', 'abonnements'],
+  ['medecins', 'Médecins', 'heart', 'sante'], ['pharmacie', 'Pharmacie', 'pill', 'sante'], ['mutuelle', 'Mutuelle', 'shield-plus', 'sante'],
+  ['enfants', 'Enfants', 'baby', 'famille'], ['animaux', 'Animaux', 'paw-print', 'famille'], ['aides_fam', 'Aides familiales', 'hand-heart', 'famille'],
+  ['cadeaux', 'Cadeaux', 'gift', 'famille'], ['dons', 'Dons', 'heart', 'famille'],
+  ['impots', 'Impôts', 'landmark', 'admin'], ['frais_bancaires', 'Frais bancaires', 'landmark', 'admin'], ['agios', 'Agios & découvert', 'landmark', 'admin'],
+  ['carte_bancaire', 'Carte bancaire', 'landmark', 'admin'], ['frais_change', 'Frais de change', 'landmark', 'admin'], ['frais_tenue', 'Frais de tenue de compte', 'landmark', 'admin'],
+  ['frais_virement', 'Frais de virement', 'landmark', 'admin'], ['autres_assurances', 'Autres assurances', 'shield-check', 'admin'], ['administratif', 'Administratif', 'clipboard-list', 'admin'],
+  ['restaurants', 'Restaurants', 'utensils', 'restauration'], ['livraison', 'Livraison', 'truck', 'restauration'], ['snacks', 'Snacks & cafés', 'coffee', 'restauration'],
+  ['repas_midi', 'Repas du midi', 'cooking-pot', 'restauration'], ['bar', 'Bar', 'martini', 'restauration'],
+  ['vetements', 'Vêtements', 'shirt', 'shopping'], ['high_tech', 'High-tech', 'laptop', 'shopping'], ['beaute', 'Beauté', 'sparkles', 'shopping'], ['shopping', 'Shopping', 'shopping-bag', 'shopping'],
+  ['sorties', 'Sorties', 'ticket', 'loisirs'], ['jeux', 'Jeux', 'gamepad-2', 'loisirs'], ['sport', 'Sport', 'dumbbell', 'loisirs'], ['formation', 'Formation', 'graduation-cap', 'loisirs'],
+  ['livres', 'Livres', 'book-open', 'loisirs'], ['hobbies', 'Hobbies', 'palette', 'loisirs'],
+  ['voyages', 'Voyages', 'plane', 'voyages'], ['airbnb', 'Airbnb & location', 'plane', 'voyages'], ['avions', "Billets d'avion", 'plane', 'voyages'], ['hotel', 'Hôtel', 'plane', 'voyages'],
+  ['cantine', 'Cantine scolaire', 'graduation-cap', 'scolarite'], ['fournitures', 'Fournitures scolaires', 'graduation-cap', 'scolarite'], ['frais_scolarite', 'Frais de scolarité', 'graduation-cap', 'scolarite'],
+  ['logement_etudiant', 'Logement étudiant', 'graduation-cap', 'scolarite'], ['universite', 'Université', 'graduation-cap', 'scolarite'],
+  ['credit_conso', 'Crédit à la consommation', 'landmark', 'dettes'], ['credit_renouv', 'Crédit renouvelable', 'landmark', 'dettes'], ['dette_proche', 'Dette à un proche', 'landmark', 'dettes'], ['pret_etudiant', 'Prêt étudiant', 'landmark', 'dettes'],
+  ['divers', 'Divers', 'package', 'divers'],
+];
+const DEFAULT_EXPENSE_CATEGORIES = CAT_DEF.map(([id, label, ico, grp]) => ({ id, label, ico, grp, icon: ci(ico), color: groupById(grp).color }));
 const DEFAULT_INCOME_CATEGORIES = [
-  { id: 'salaire', label: 'Salaire', icon: '💼', color: '#7fa686' },
-  { id: 'vente', label: 'Vente', icon: '🏷️', color: '#6c93c2' },
-  { id: 'remboursement', label: 'Rembours.', icon: '💶', color: '#b98fce' },
-  { id: 'virement', label: 'Virement', icon: '🔁', color: '#cf7a9c' },
-  { id: 'tips', label: 'Tips', icon: '💰', color: '#e0804a' },
-  { id: 'autre_i', label: 'Autre', icon: '•••', color: '#8b8d93' },
-];
-const FALLBACK_CAT = { id: '__inconnu__', label: 'Autre', icon: '•••', color: '#8b8d93' };
+  { id: 'salaire', label: 'Salaire', ico: 'briefcase', color: '#7fa686' },
+  { id: 'vente', label: 'Vente', ico: 'tag', color: '#6c93c2' },
+  { id: 'remboursement', label: 'Rembours.', ico: 'coins', color: '#b98fce' },
+  { id: 'virement', label: 'Virement', ico: 'repeat', color: '#cf7a9c' },
+  { id: 'tips', label: 'Tips', ico: 'banknote', color: '#e0804a' },
+  { id: 'autre_i', label: 'Autre', ico: 'ellipsis', color: '#8b8d93' },
+].map(c => ({ ...c, icon: ci(c.ico) }));
+const OLD_CAT_MAP = { alimentation: 'courses', transport: 'transports', logement: 'immobilier', epargne: 'divers', sante: 'medecins', sorties: 'sorties', commun: 'divers', shopping: 'shopping', tech: 'high_tech', cadeaux: 'cadeaux', autre_d: 'divers' };
+const FALLBACK_CAT = { id: '__inconnu__', label: 'Autre', icon: ci('ellipsis'), color: '#8b8d93', grp: 'divers' };
 function allCats() { return [...state.expenseCats, ...state.incomeCats]; }
 function findCat(id) { return allCats().find(c => c.id === id) || FALLBACK_CAT; }
 function catsFor(type) { return type === 'income' ? state.incomeCats : state.expenseCats; }
@@ -1015,6 +1092,37 @@ async function loadAll() {
   } catch (e) { state.incomeCats = [...DEFAULT_INCOME_CATEGORIES]; }
 
   try { state.budgets = JSON.parse(localStorage.getItem('fin_budgets') || '{}') || {}; } catch (e) { state.budgets = {}; }
+  // migration vers la nouvelle base de catégories (v2) + icônes SVG
+  try {
+    if (localStorage.getItem('fin_cats_v2') !== '1') {
+      const oldIds = new Set(Object.keys(OLD_CAT_MAP));
+      const newIds = new Set(DEFAULT_EXPENSE_CATEGORIES.map(c => c.id));
+      const custom = state.expenseCats.filter(c => c && !oldIds.has(c.id) && !newIds.has(c.id));
+      state.expenseCats = [...DEFAULT_EXPENSE_CATEGORIES.map(c => ({ ...c })), ...custom];
+      const mp = id => OLD_CAT_MAP[id] || id;
+      state.transactions.forEach(t => { if (t.cat) t.cat = mp(t.cat); });
+      state.scheduled.forEach(t => { if (t.cat) t.cat = mp(t.cat); });
+      const nb = {};
+      Object.entries(state.budgets).forEach(([k, v]) => {
+        const c = state.expenseCats.find(x => x.id === mp(k));
+        const g = c ? grpOf(c) : (GROUPS.some(x => x.id === k) ? k : 'divers');
+        nb[g] = (nb[g] || 0) + v;
+      });
+      state.budgets = nb;
+      localStorage.setItem('fin_transactions', JSON.stringify(state.transactions));
+      localStorage.setItem('fin_scheduled', JSON.stringify(state.scheduled));
+      localStorage.setItem('fin_budgets', JSON.stringify(state.budgets));
+      localStorage.setItem('fin_expense_cats', JSON.stringify(state.expenseCats));
+      localStorage.setItem('fin_cats_v2', '1');
+    }
+  } catch (e) {}
+  // icônes SVG (à jour à chaque chargement)
+  [state.expenseCats, state.incomeCats].forEach(list => list.forEach(c => {
+    const def = DEFAULT_EXPENSE_CATEGORIES.concat(DEFAULT_INCOME_CATEGORIES).find(d => d.id === c.id);
+    if (def) { c.ico = def.ico; c.icon = def.icon; if (def.grp) c.grp = def.grp; }
+    else if (!String(c.icon || '').startsWith('<svg')) { c.ico = 'tag'; c.icon = ci('tag'); }
+    else c.icon = ci(c.ico || 'tag');
+  }));
   try { state.goals = JSON.parse(localStorage.getItem('fin_goals') || '[]') || []; } catch (e) { state.goals = []; }
   try { state.accounts = JSON.parse(localStorage.getItem('fin_accounts') || '[]') || []; } catch (e) { state.accounts = []; }
   try { state.transfers = JSON.parse(localStorage.getItem('fin_transfers') || '[]') || []; } catch (e) { state.transfers = []; }
@@ -1412,6 +1520,7 @@ function renderActive() {
   else if (t === 'patrimoine') renderPatrimoine();
   else if (t === 'objectifs') renderGoals();
   document.getElementById('fabRound').style.display = 'none';
+  if (state.catView) renderCatView();
 }
 
 // ---------- Recurrence / projection helpers ----------
@@ -1612,7 +1721,8 @@ function renderCalendarSub() {
   });
 
   const list = document.getElementById('calList');
-  const shown = state.calSelected ? items.filter(i => i.date === state.calSelected) : items;
+  const upcoming = items.filter(i => i.kind === 'sched');
+  const shown = state.calSelected ? upcoming.filter(i => i.date === state.calSelected) : upcoming;
   const head = document.createElement('div');
   head.className = 'kc-title';
   head.innerHTML = state.calSelected
@@ -1622,7 +1732,7 @@ function renderCalendarSub() {
   if (!shown.length) {
     const e = document.createElement('div');
     e.className = 'empty-state';
-    e.textContent = state.calSelected ? 'Rien ce jour-là.' : 'Aucune opération ce mois-ci. Touche + pour en ajouter.';
+    e.textContent = state.calSelected ? 'Rien de prévu ce jour-là.' : 'Aucune opération à venir ce mois-ci. Touche + pour en ajouter.';
     list.appendChild(e);
   }
   let lastDate = null;
@@ -1671,10 +1781,10 @@ function renderBudgetSub() {
 
   // --- aggregates ---
   const expReal = {}, expPlan = {};
-  items.filter(i => i.type !== 'income').forEach(i => { const t = i.kind === 'tx' ? expReal : expPlan; t[i.cat.id] = (t[i.cat.id] || 0) + i.amount; });
-  const expCats = state.expenseCats.filter(c => expReal[c.id] || expPlan[c.id] || state.budgets[c.id]);
+  items.filter(i => i.type !== 'income').forEach(i => { const t = i.kind === 'tx' ? expReal : expPlan; t[grpOf(i.cat)] = (t[grpOf(i.cat)] || 0) + i.amount; });
+  const expCats = GROUPS.filter(c => state.budgets[c.id]);
   // planned amount per expense category: user budget if set, otherwise what is already spent/scheduled
-  const planned = c => state.budgets[c.id] || ((expReal[c.id] || 0) + (expPlan[c.id] || 0));
+  const planned = c => state.budgets[c.id] || 0;
   const totalPlannedExp = expCats.reduce((s, c) => s + planned(c), 0);
   const incItems = items.filter(i => i.type === 'income');
   const totalInc = incItems.reduce((s, i) => s + i.amount, 0);
@@ -1770,7 +1880,7 @@ function renderBudgetSub() {
 
   root.querySelectorAll('.bd-switch button').forEach(b => b.onclick = () => { state.budgetMode = b.dataset.mode; state.budgetDetail = null; renderBudgetSub(); });
   root.querySelectorAll('[data-detail]').forEach(b => b.onclick = () => { state.budgetDetail = state.budgetDetail === b.dataset.detail ? null : b.dataset.detail; renderBudgetSub(); });
-  root.querySelectorAll('.bd-ic').forEach(b => b.onclick = () => { state.budgetDetail = state.budgetDetail === b.dataset.seg ? null : b.dataset.seg; renderBudgetSub(); });
+  root.querySelectorAll('.bd-ic').forEach(b => b.onclick = () => { if (GROUPS.find(c => c.id === b.dataset.seg)) openCatView(b.dataset.seg); else { state.budgetDetail = state.budgetDetail === b.dataset.seg ? null : b.dataset.seg; renderBudgetSub(); } });
 
   // --- sections: Revenus + Dépenses ---
   const sec = document.getElementById('bdSections');
@@ -1799,7 +1909,7 @@ function renderBudgetSub() {
   }
   sec.insertAdjacentHTML('beforeend', `<div class="bd-sec"><span>Dépenses</span><b>${eurR(mode === 'plan' ? totalPlannedExp : realExp)}</b></div>`);
   const dcard = document.createElement('div'); dcard.className = 'kc-card bd-list';
-  const allCats = state.expenseCats.slice().sort((a, b) => planned(b) - planned(a));
+  const allCats = GROUPS.slice().sort((a, b) => planned(b) - planned(a));
   allCats.forEach(c => {
     const real = expReal[c.id] || 0, plan = expPlan[c.id] || 0, p = planned(c), b = state.budgets[c.id] || 0;
     const row = document.createElement('div');
@@ -1807,28 +1917,85 @@ function renderBudgetSub() {
     const ratio = p ? (real + plan) / p : 0;
     const col = !b ? '#4a9a6a' : (real + plan) > b ? '#c0453f' : ratio > 0.8 ? '#e0a23a' : '#4a9a6a';
     row.innerHTML = mode === 'plan'
-      ? `<div class="kc-ico" style="background:${c.color}">${c.icon}</div><div class="bi"><div class="bn">${escapeHtml(c.label)}</div><div class="bs">${b ? 'Budget défini' : (p ? 'Selon opérations' : 'Touche pour fixer un budget')}</div></div><div class="ba neg">${p ? '-' + eurS(p) : '—'}</div>`
+      ? `<div class="kc-ico" style="background:${c.color}">${c.icon}</div><div class="bi"><div class="bn">${escapeHtml(c.label)}</div><div class="bs">${b ? 'Budget fixé' : 'Touche pour fixer un budget'}</div></div><div class="ba neg">${p ? '-' + eurS(p) : '—'}</div>`
       : `<div class="kc-ico" style="background:${c.color}">${c.icon}</div><div class="bi"><div class="bn">${escapeHtml(c.label)}</div>${p ? `<div class="kc-bar"><div style="width:${Math.min(100, ratio * 100)}%;background:${col}"></div></div>` : ''}<div class="bs">${plan ? eurS(plan) + ' à venir' : (p ? '' : 'Pas de budget')}</div></div><div class="ba">${eurS(real)}${p ? `<small>/ ${eurS(p)}</small>` : ''}</div>`;
-    row.onclick = (ev) => {
-      if (ev.target.closest('.kc-bedit')) return;
-      const ex = row.querySelector('.kc-bedit');
-      if (ex) { ex.remove(); return; }
-      const f = document.createElement('div');
-      f.className = 'kc-bedit';
-      f.style.cssText = 'flex-basis:100%;width:100%';
-      f.innerHTML = `<input inputmode="decimal" placeholder="Budget mensuel en €" value="${b ? String(b).replace('.', ',') : ''}"><button type="button">OK</button>`;
-      row.appendChild(f);
-      const inp = f.querySelector('input'); inp.focus();
-      f.querySelector('button').onclick = async () => {
-        const v = parseFloat(String(inp.value).replace(',', '.'));
-        if (!(v > 0)) delete state.budgets[c.id]; else state.budgets[c.id] = v;
-        await saveBudgets();
-        renderBudgetSub();
-      };
-    };
+    row.onclick = () => openCatView(c.id);
     dcard.appendChild(row);
   });
   sec.appendChild(dcard);
+}
+
+
+// ---------- DÉTAIL D'UN GROUPE (budget) ----------
+function openCatView(id) { state.catView = id; document.getElementById('catView').classList.add('open'); renderCatView(); }
+function closeCatView() { state.catView = null; document.getElementById('catView').classList.remove('open'); }
+function renderCatView() {
+  const id = state.catView; if (!id) return;
+  const c = GROUPS.find(x => x.id === id);
+  if (!c) { closeCatView(); return; }
+  const y = state.viewMonth.getFullYear(), m = state.viewMonth.getMonth();
+  const items = monthItems(y, m);
+  const mine = items.filter(i => i.type !== 'income' && grpOf(i.cat) === id);
+  const real = mine.filter(i => i.kind === 'tx').reduce((a, i) => a + i.amount, 0);
+  const plan = mine.filter(i => i.kind === 'sched').reduce((a, i) => a + i.amount, 0);
+  const b = state.budgets[id] || 0;
+  const planned = b;
+  const totalInc = items.filter(i => i.type === 'income').reduce((a, i) => a + i.amount, 0);
+  // groupes (comme la liste du budget)
+  const g = {};
+  mine.forEach(i => {
+    const k = i.label;
+    const o = g[k] = g[k] || { label: i.label, exp: 0, got: 0, date: i.date, p: null, icon: i.cat.icon };
+    o.exp += i.amount;
+    if (i.kind === 'tx') o.got += i.amount; else { o.p = i.p; if (i.date < o.date || !o.got) o.date = i.date; }
+  });
+  const rows = Object.values(g).sort((a, b2) => b2.exp - a.exp);
+  const base = b || Math.max(real + plan, 1);
+  const mtxt = state.viewMonth.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+  const usedCats = new Set(mine.map(i => i.cat.id));
+  const sugg = state.expenseCats.filter(k => grpOf(k) === id && !usedCats.has(k.id));
+  document.getElementById('cvBody').innerHTML = `
+    <div class="cv-head">
+      <button class="cv-back" id="cvBack" aria-label="Retour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="cv-ico" style="background:${c.color}">${c.icon}</div>
+      <div class="cv-tt"><b>${escapeHtml(c.label)}</b><span>${mtxt.charAt(0).toUpperCase() + mtxt.slice(1)}</span></div>
+      <button class="cv-btn del" id="cvDel" aria-label="Retirer le budget">🗑</button>
+    </div>
+    <div class="cv-card">
+      <div class="cv-lb">BUDGET</div>
+      <div class="cv-amt"><span>${b ? eurS(b) : '—'}</span><button id="cvEdit" aria-label="Modifier">✎</button></div>
+      <div id="cvEditBox"></div>
+      ${b ? `<div class="cv-bar"><i style="width:${Math.min(100, (real + plan) / b * 100)}%;background:${(real + plan) > b ? '#c0453f' : c.color}"></i></div>` : ''}
+      <div class="cv-sub">${b ? (totalInc ? Math.round(b / totalInc * 100) + ' % de tes revenus du mois' : 'Objectif de base du mois') : 'Fixe un montant de base pour ce groupe.'}</div>
+      <div class="cv-sub">Réel : ${eurS(real)} dépensés${plan ? ' · ' + eurS(plan) + ' à venir' : ''}</div>
+    </div>
+    <div class="cv-h2">Dépenses du mois</div>
+    <div class="cv-list">
+      ${rows.map((o, i) => `<div class="cv-it"><div class="cv-ico" style="background:${c.color}">${o.icon || c.icon}</div><div class="bi"><div class="bn">${escapeHtml(o.label)}</div><div class="bs">le ${parseKey(o.date).getDate()}${o.got ? ' · réalisé' : ''}</div><div class="cv-bar"><i style="width:${Math.min(100, o.exp / base * 100)}%;background:${c.color}"></i></div></div><div class="ba">${eurS(o.exp)}</div>${o.p ? `<button class="x" data-del="${o.p.id}" aria-label="Supprimer">✕</button>` : '<span style="width:26px"></span>'}</div>`).join('')}
+      <button class="cv-add" id="cvAdd">+ Ajouter une dépense régulière</button>
+    </div>
+    ${sugg.length ? `<div class="cv-h2">Suggestions</div><div class="cv-chips">${sugg.map((k, i) => `<button class="cv-chip" data-s="${i}"><span style="color:#b9ae9a">+</span><i style="background:${k.color}">${k.icon}</i>${escapeHtml(k.label)}</button>`).join('')}</div>` : ''}`;
+  const q = sel => document.getElementById('cvBody').querySelector(sel);
+  q('#cvBack').onclick = closeCatView;
+  q('#cvDel').onclick = async () => { if (state.budgets[id]) { delete state.budgets[id]; await saveBudgets(); showToast('Budget retiré'); renderActive(); renderCatView(); } else showToast('Aucun budget défini'); };
+  q('#cvEdit').onclick = () => {
+    const box = q('#cvEditBox');
+    if (box.innerHTML) { box.innerHTML = ''; return; }
+    box.innerHTML = `<div class="cv-bedit"><input inputmode="decimal" placeholder="Budget mensuel en €" value="${b ? String(b).replace('.', ',') : ''}"><button type="button">OK</button></div>`;
+    const inp = box.querySelector('input'); inp.focus();
+    box.querySelector('button').onclick = async () => {
+      const v = parseFloat(String(inp.value).replace(',', '.'));
+      if (!(v > 0)) delete state.budgets[id]; else state.budgets[id] = v;
+      await saveBudgets(); renderActive(); renderCatView();
+    };
+  };
+  const addReg = k => { openWizard('expense'); if (k) { state.wiz.cat = k.id; state.wiz.name = k.label; } renderWizard(); };
+  q('#cvAdd').onclick = () => addReg(null);
+  document.getElementById('cvBody').querySelectorAll('.cv-chip').forEach(bt => bt.onclick = () => addReg(sugg[+bt.dataset.s]));
+  document.getElementById('cvBody').querySelectorAll('[data-del]').forEach(bt => bt.onclick = async () => {
+    state.scheduled = state.scheduled.filter(x => x.id !== bt.dataset.del);
+    await saveScheduled(); renderActive(); renderCatView(); showToast('Supprimé');
+  });
 }
 
 function tweenNum(el, from, to, fmt) {
@@ -2010,7 +2177,7 @@ function renderActivity() {
   // à confirmer / à venir
   const due = state.scheduled.filter(p => p.nextDate <= tk).map(p => ({ p, date: p.nextDate })).sort((a, b) => a.date.localeCompare(b.date));
   const soon = [];
-  state.scheduled.forEach(p => occurrencesInWindow(p, horizonKey).forEach(date => { if (date > tk) soon.push({ p, date }); }));
+  state.scheduled.forEach(p => occurrencesInWindow(p, horizonKey).forEach(date => { if (date > tk && date.slice(0, 7) === tk.slice(0, 7)) soon.push({ p, date }); }));
   soon.sort((a, b) => a.date.localeCompare(b.date));
 
   // transactions (filtre + recherche)
@@ -2105,7 +2272,7 @@ function renderActivity() {
   const soonEl = document.getElementById('actSoon');
   if (soon.length) {
     soonEl.innerHTML = '<div class="act-sec dim">À venir</div>';
-    soon.slice(0, 5).forEach(({ p, date }) => {
+    soon.forEach(({ p, date }) => {
       const c = findCat(p.cat);
       soonEl.appendChild(buildRow({ kind: 'sched', id: p.id, p, type: p.type, amount: p.amount, cat: c, label: p.label || c.label, date, ts: 0 }));
     });
@@ -2300,10 +2467,6 @@ function renderPatrimoine() {
       <div class="pa-x"><span>${parseKey(pts[0].k).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' })}</span><span>${parseKey(pts[lastI].k).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' })}</span></div>
     </div>
     <div id="paTip"></div>
-    <div class="pa-card">
-      <div class="pa-h"><span>Répartition</span><div class="pa-tog"><button type="button" data-g="cat" class="${state.paGroup === 'cat' ? 'on' : ''}">Catégorie</button><button type="button" data-g="acc" class="${state.paGroup === 'acc' ? 'on' : ''}">Compte</button></div></div>
-      ${tree}${popHtml}
-    </div>
     ${secs}
     <div class="pa-hist"><h2>Historique</h2>${hist || '<div class="empty-state">Aucun mouvement pour l\'instant.</div>'}</div>`;
 
@@ -2457,15 +2620,16 @@ document.getElementById('awNext').onclick = accWizNext;
 // ---------- NOUVELLE DEPENSE / REVENU ----------
 function openTxWiz(type) {
   if (type === 'transfer' && accList().length < 2) { showToast("Ajoute d'abord un deuxième compte"); openAccWiz(); return; }
-  state.tx = { step: 0, type, acc: 'main', to: null, view: 'car', amount: '', name: '', cat: null, refund: false, later: false, noBal: false, date: todayKey() };
+  state.tx = { step: type === 'transfer' ? 0 : 1, type, acc: 'main', to: null, view: 'car', amount: '', name: '', cat: null, refund: false, later: false, noBal: false, date: todayKey() };
   document.getElementById('txWiz').classList.add('open');
   renderTxWiz();
 }
 function closeTxWiz() { document.getElementById('txWiz').classList.remove('open'); state.tx = null; }
-function txBack() { const w = state.tx; if (!w) return; if (w.step === 0) return closeTxWiz(); w.step--; renderTxWiz(); }
+function txBack() { const w = state.tx; if (!w) return; if (w.step === 0 || (w.type !== 'transfer' && w.step === 1)) return closeTxWiz(); w.step--; renderTxWiz(); }
 function txAmount() { return parseFloat(String(state.tx.amount).replace(/\s/g, '').replace(',', '.')) || 0; }
 function txNext() {
   const w = state.tx; if (!w) return;
+  if (w.type !== 'transfer') { if (w.step < 2) { w.step++; renderTxWiz(); return; } saveTxWiz(); return; }
   if (w.step < 3) { w.step++; renderTxWiz(); return; }
   saveTxWiz();
 }
@@ -2525,7 +2689,7 @@ function renderTxWiz() {
   if (tr) {
     if (!w.to || w.to === w.acc) { const o = accs.find(a => a.id !== w.acc); w.to = o ? o.id : null; }
   }
-  document.getElementById('twProg').style.width = (tr ? [20, 48, 80, 100] : [15, 33, 55, 100])[w.step] + '%';
+  document.getElementById('twProg').style.width = (tr ? [20, 48, 80, 100] : [0, 45, 100, 100])[w.step] + '%';
   bar.className = 'tw-bar'; foot.classList.remove('green');
   nx.disabled = false; nx.textContent = 'Continuer'; nx.style.display = '';
   if (w.step === 0 || (tr && w.step === 2)) {
@@ -2583,6 +2747,7 @@ function renderTxWiz() {
       b.onclick = () => { w.cat = c.id; renderTxWiz(); };
       grid.appendChild(b);
     });
+    nx.textContent = inc ? 'Ajouter le revenu' : 'Ajouter la dépense';
     nx.disabled = !w.cat;
   } else if (tr) {
     foot.classList.add('green'); bar.classList.add('on');
@@ -2635,6 +2800,18 @@ function renderTxWiz() {
 document.getElementById('twBack').onclick = txBack;
 document.getElementById('twClose').onclick = closeTxWiz;
 document.getElementById('twNext').onclick = txNext;
+// barre du bas : disparaît en défilant vers le bas, revient en remontant
+(function () {
+  const nav = document.querySelector('.bottom-nav'); let last = window.scrollY, acc = 0;
+  window.addEventListener('scroll', () => {
+    const y = Math.max(0, window.scrollY), d = y - last; last = y;
+    if (y < 40) { nav.classList.remove('hide'); acc = 0; return; }
+    if ((d > 0) !== (acc > 0)) acc = 0;
+    acc += d;
+    if (acc > 12) nav.classList.add('hide'); else if (acc < -8) nav.classList.remove('hide');
+  }, { passive: true });
+  document.addEventListener('click', e => { if (e.target.closest && e.target.closest('.nav-item')) nav.classList.remove('hide'); });
+})();
 
 // ---------- OBJECTIFS ----------
 
@@ -2942,8 +3119,7 @@ function renderStats() {
       <div class="st-bars ${cls}">${c.buckets.map((b, i) => `<div class="c" data-i="${i}"><i class="${b.v ? '' : 'z'}" style="height:${b.v ? Math.max(4, b.v / max * 100) : 0}%"></i></div>`).join('')}</div>
       <div class="st-x">${c.buckets.map((b, i) => `<span>${tick(i) ? b.lab : ''}</span>`).join('')}</div>
     </div>
-    <div id="stDetail"></div>
-    ${treeHtml}`;
+    <div id="stDetail"></div>`;
   root.querySelectorAll('.st-tog [data-t]').forEach(b => b.onclick = () => { state.stType = b.dataset.t; state.stSel = null; renderStats(); });
   const bars = root.querySelector('.st-bars'), cols = [...bars.querySelectorAll('.c')];
   const showSel = () => {
@@ -3067,7 +3243,7 @@ function openCustomCatForm(gridEl, type, onSelect) {
     const list = catsFor(type);
     const color = CUSTOM_CAT_COLORS[list.length % CUSTOM_CAT_COLORS.length];
     const id = 'custom_' + type + '_' + Date.now().toString(36);
-    const newCat = { id, label, icon: '🏷️', color };
+    const newCat = { id, label, ico: 'tag', icon: ci('tag'), color, grp: 'divers' };
     list.push(newCat);
     await saveCatsFor(type);
     form.remove();
