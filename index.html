@@ -93,15 +93,15 @@
   .st-tog { display: flex; background: #f0ebe0; border-radius: 28px; padding: 5px; }
   .st-tog button { flex: 1; border: none; background: none; border-radius: 24px; padding: 14px 0; font-size: 16px; font-weight: 800; color: #a39682; cursor: pointer; }
   .st-tog button.on { background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.1); } .st-tog button.on.exp { color: #c0392b; } .st-tog button.on.inc { color: #2a7a46; }
-  .st-top { display: flex; justify-content: space-between; align-items: flex-start; padding: 22px 10px 4px; }
-  .st-big { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; } .st-big.exp { color: #c0392b; } .st-big.inc { color: #2a7a46; }
+  .st-top { display: flex; justify-content: space-between; align-items: flex-start; padding: 12px 10px 2px; }
+  .st-big { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; } .st-big.exp { color: #c0392b; } .st-big.inc { color: #2a7a46; }
   .st-lab { color: #8a7b66; font-size: 15px; margin-top: 6px; }
   .st-avg { border-left: 1.5px solid #e9e1d0; padding-left: 18px; text-align: left; margin-top: 4px; } .st-avg b { display: block; font-size: 20px; font-weight: 800; } .st-avg b.exp { color: #c0392b; } .st-avg b.inc { color: #2a7a46; } .st-avg span { color: #8a7b66; font-size: 14px; }
   .st-delta { display: flex; align-items: center; gap: 14px; padding: 10px 10px 0; }
   .st-delta .ar { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; }
   .st-delta .ar.bad { background: #fbe3e0; color: #c0392b; } .st-delta .ar.good { background: #dff0e3; color: #2a7a46; }
   .st-delta b { display: block; font-size: 18px; } .st-delta b.bad { color: #c0392b; } .st-delta b.good { color: #2a7a46; } .st-delta span { color: #8a7b66; font-size: 14px; }
-  .st-bars { display: flex; align-items: flex-end; height: 250px; margin: 22px 6px 0; gap: 2px; }
+  .st-bars { display: flex; align-items: flex-end; height: 160px; margin: 14px 6px 0; gap: 2px; }
   .st-bars .c { flex: 1; display: flex; justify-content: center; align-items: flex-end; height: 100%; }
   .st-bars i { display: block; width: min(14px, 70%); min-width: 4px; border-radius: 8px; background: #a37d10; }
   .st-bars.inc i { background: #3a8f5c; } .st-bars i.z { height: 3px !important; background: #eee7d8; }
@@ -109,12 +109,12 @@
   .st-bars .c { border-radius: 12px; transition: background .1s; } .st-bars .c.sel { background: #ebe3d1; box-shadow: 0 0 0 3px #ebe3d1; }
   .st-det-h { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 8px 10px; font-size: 17px; font-weight: 800; color: #3d2f1e; }
   .st-det-h b.exp { color: #c0392b; } .st-det-h b.inc { color: #2a7a46; }
-  .st-dr { display: flex; align-items: center; gap: 12px; padding: 7px 8px; }
-  .st-dr .ci { width: 38px; height: 38px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+  .st-dr { display: flex; align-items: center; gap: 12px; padding: 4px 8px; }
+  .st-dr .ci { width: 30px; height: 30px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
   .st-dr .nm { width: 96px; font-size: 14px; font-weight: 600; color: #1c130c; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0; }
   .st-dr .tr { flex: 1; height: 14px; background: #f0ebe0; border-radius: 8px; overflow: hidden; } .st-dr .tr i { display: block; height: 100%; border-radius: 8px; }
   .st-dr .am { font-size: 14px; font-weight: 800; min-width: 62px; text-align: right; } .st-dr .am.exp { color: #c0392b; } .st-dr .am.inc { color: #2a7a46; }
-  .st-x { display: flex; margin: 12px 6px 6px; } .st-x span { flex: 1 1 0; min-width: 0; display: flex; justify-content: center; text-align: center; font-size: 11px; font-weight: 700; color: #8a7b66; white-space: nowrap; overflow: visible; }
+  .st-x { display: flex; margin: 8px 6px 4px; } .st-x span { flex: 1 1 0; min-width: 0; display: flex; justify-content: center; text-align: center; font-size: 11px; font-weight: 700; color: #8a7b66; white-space: nowrap; overflow: visible; }
   .st-tree { position: relative; height: 430px; border-radius: 20px; overflow: hidden; margin: 0; }
   .st-cell { position: absolute; padding: 3px; box-sizing: border-box; }
   .st-cell > div { width: 100%; height: 100%; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-align: center; overflow: hidden; padding: 4px; box-sizing: border-box; }
@@ -151,7 +151,7 @@
   /* ---------- Calendar ---------- */
   .kc-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
   .kc-dow { text-align: center; font-size: 11px; font-weight: 700; color: #9b9183; padding: 4px 0 8px; }
-  .kc-day { border: 2px solid transparent; border-radius: 14px; background: none; min-height: 68px; padding: 6px 0 4px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 3px; font-size: 12px; color: var(--text-hi); cursor: pointer; min-width: 0; font-weight: 500; }
+  .kc-day { border: 2px solid transparent; border-radius: 14px; background: none; min-height: 44px; padding: 4px 0 3px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 3px; font-size: 12px; color: var(--text-hi); cursor: pointer; min-width: 0; font-weight: 500; }
   .kc-day.empty { cursor: default; visibility: hidden; }
   .kc-day.exp { background: #fbe4e1; }
   .kc-day.inc { background: #d9eddc; }
@@ -242,6 +242,9 @@
   .fc2-top b { font-size: 32px; font-weight: 800; color: #2c231b; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums; } .fc2-top b.grey { color: #a9a39b; }
   .fc2-top .df { font-size: 16px; font-weight: 800; } .fc2-top .df.neg { color: #c0392b; } .fc2-top .df.pos { color: #2a7a46; }
   .fc2-chart { position: relative; margin: 36px 4px 0; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: pointer; }
+  .fc2-svg { width: 100%; display: block; overflow: visible; }
+  .fc2-dot { position: absolute; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 50%; background: #fff; border: 3px solid #2f9a5c; box-sizing: border-box; pointer-events: none; }
+  .fc2-dot.out { border-color: #d0463f; }
   .fc2-bars { display: flex; gap: 3px; }
   .fc2-bars .c { flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 0; }
   .fc2-bars .u, .fc2-bars .dn { width: 100%; display: flex; justify-content: center; }
@@ -410,14 +413,14 @@
   .bd-switch button { border: none; background: none; color: #a39a8c; font-size: 14px; font-weight: 800; padding: 10px 22px; border-radius: 18px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
   .bd-switch button svg { width: 22px; height: 22px; }
   .bd-switch button.on { background: #fff; color: #8a6420; box-shadow: 0 2px 8px rgba(80,60,20,0.15); }
-  .bd-donut { position: relative; width: 100%; max-width: 330px; margin: 0 auto; aspect-ratio: 1; }
+  .bd-donut { position: relative; width: 100%; max-width: 230px; margin: 0 auto; aspect-ratio: 1; }
   .bd-donut svg { width: 100%; height: 100%; display: block; }
   .bd-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
-  .bd-center .big { font-size: 34px; max-width: 62%; white-space: nowrap; font-weight: 800; color: #3d7f5c; letter-spacing: -0.02em; }
-  .bd-center .big small { font-size: 22px; font-weight: 700; }
+  .bd-center .big { font-size: 26px; max-width: 62%; white-space: nowrap; font-weight: 800; color: #3d7f5c; letter-spacing: -0.02em; }
+  .bd-center .big small { font-size: 17px; font-weight: 700; }
   .bd-center .big.neg { color: #c0453f; }
   .bd-center .sm { font-size: 12px; color: var(--text-dim); font-weight: 600; margin-top: 2px; }
-  .bd-ic { position: absolute; width: 36px; height: 36px; margin: -18px 0 0 -18px; border-radius: 50%; border: 2.5px solid #fff; font-size: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+  .bd-ic { position: absolute; width: 28px; height: 28px; margin: -14px 0 0 -14px; border-radius: 50%; border: 2.5px solid #fff; font-size: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
   .bd-tiles { display: flex; gap: 10px; margin-top: 18px; }
   .bd-tile { flex: 1; min-width: 0; background: #f6f1e8; border: none; border-radius: 14px; padding: 11px 11px; text-align: left; cursor: default; }
   button.bd-tile { cursor: pointer; }
@@ -674,7 +677,7 @@
   .act-sh-head h1 { flex: 1; margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; overflow: hidden; white-space: nowrap; max-width: 100%; transition: max-width .35s ease, font-size .35s ease, opacity .35s ease, flex .35s ease; }
   .act-hs { margin-left: -12px; flex: 0 1 0; width: 0; min-width: 0; opacity: 0; padding: 0; border: 0 solid #e2d8c2; border-radius: 30px; background: #fff; font-size: 13px; color: var(--text); outline: none; transition: flex .35s ease, opacity .3s ease, padding .35s ease, border-width .2s; pointer-events: none; }
   .act-sh-head.stuck { padding-top: calc(env(safe-area-inset-top) + 10px); padding-bottom: 10px; box-shadow: 0 8px 16px -8px rgba(60,50,40,0.18); }
-  .act-sh-head.stuck h1 { flex: 0 0 auto; max-width: 34px; font-size: 22px; opacity: .45; }
+  .act-sh-head.stuck h1 { flex: 0 0 0; max-width: 0; width: 0; margin: 0 -12px 0 0; padding: 0; font-size: 22px; opacity: 0; visibility: hidden; }
   .act-sh-head.stuck .act-hs { margin-left: 0; flex: 1 1 auto; opacity: 1; padding: 13px 16px; border-width: 2px; pointer-events: auto; }
   .act-sh-head.stuck #actSearchBtn { display: none; }
   .act-sheet.stk .act-search { display: none; }
@@ -2123,7 +2126,7 @@ function renderForecastSub() {
     else days.push({ k, d, kind: k === tk ? 'today' : 'fut', v: balAt[k] });
   }
   const pos = Math.max(1, ...days.map(x => Math.max(x.v, 0))), neg = Math.max(0, ...days.map(x => Math.max(-x.v, 0)));
-  const CH = 250, sc = CH / (pos + neg), topH = pos * sc, botH = neg * sc;
+  const CH = 160, sc = CH / (pos + neg), topH = pos * sc, botH = neg * sc;
   const todayIdx = days.findIndex(x => x.k === tk);
   const sel = state.fcSel && days.find(x => x.k === state.fcSel) ? state.fcSel : null;
   const dleft = Math.round((parseKey(horizon) - parseKey(tk)) / 86400000);
@@ -2137,14 +2140,32 @@ function renderForecastSub() {
     const mx = Math.max(1, ...rows.map(r => r.amt));
     const head = parseKey(k).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
     return `<div class="fc2-day"><div class="fc2-dh">${head}</div>
-      ${rows.length ? `<div class="fc2-rows">${rows.map(r => `<div class="fc2-r"><span class="ci" style="background:${r.c.color}">${r.c.icon}</span><span class="nm">${escapeHtml(r.label)}</span>${rows.length > 1 ? `<span class="tr"><i style="width:${Math.max(6, r.amt / mx * 100)}%;background:${r.inc ? '#2f6a4a' : '#9b2a22'}"></i></span>` : ''}<span class="am ${r.inc ? 'inc' : 'exp'}">${eurS(r.amt)}</span></div>`).join('')}</div>` : ''}
-      <div class="fc2-after">Comptes après les transactions</div>
-      <div class="fc2-acc"><span class="pill">${escapeHtml(acc.name)}</span><b>${eurR(balOn(k))}</b></div></div>`;
+      ${rows.length ? `<div class="fc2-rows">${rows.map(r => `<div class="fc2-r"><span class="ci" style="background:${r.c.color}">${r.c.icon}</span><span class="nm">${escapeHtml(r.label)}</span>${rows.length > 1 ? `<span class="tr"><i style="width:${Math.max(6, r.amt / mx * 100)}%;background:${r.inc ? '#2f6a4a' : '#9b2a22'}"></i></span>` : ''}<span class="am ${r.inc ? 'inc' : 'exp'}">${eurS(r.amt)}</span></div>`).join('')}</div>` : ''}</div>`;
   };
   // à venir
   const upBy = {}; events.filter(e => e.date >= tk).forEach(e => (upBy[e.date] = upBy[e.date] || []).push(e));
   const upKeys = Object.keys(upBy).sort();
 
+  // courbe du solde (vert au-dessus de zéro, rouge en dessous)
+  const FW = 340, FP = 14;
+  const fv = days.map(x => balOn(x.k));
+  const flo = Math.min(0, ...fv), fhi = Math.max(0, ...fv), fsp = (fhi - flo) || 1;
+  const FX = i => (i + 0.5) / N * FW, FY = v => FP + (1 - (v - flo) / fsp) * (CH - 2 * FP);
+  const zY = FY(0);
+  let fPath = `M${FX(0).toFixed(1)},${FY(fv[0]).toFixed(1)}`;
+  for (let i = 1; i < N; i++) { const x0 = FX(i - 1), y0 = FY(fv[i - 1]), x1 = FX(i), y1 = FY(fv[i]), cx = (x0 + x1) / 2; fPath += ` C${cx.toFixed(1)},${y0.toFixed(1)} ${cx.toFixed(1)},${y1.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}`; }
+  const fDots = days.map((x, i) => {
+    const ops = (x.k <= tk ? (txBy[x.k] || []).map(t => sg(t.type, t.amount)) : []).concat(x.k >= tk ? (evBy[x.k] || []).map(e => sg(e.p.type, e.p.amount)) : []);
+    if (!ops.length) return '';
+    const net = ops.reduce((a, b) => a + b, 0);
+    return `<i class="fc2-dot ${net >= 0 ? 'in' : 'out'}" style="left:${((i + 0.5) / N * 100).toFixed(2)}%;top:${FY(fv[i]).toFixed(1)}px"></i>`;
+  }).join('');
+  const fArea = `${fPath} L${FX(N - 1).toFixed(1)},${zY.toFixed(1)} L${FX(0).toFixed(1)},${zY.toFixed(1)} Z`;
+  const fcSvg = `<defs><clipPath id="fcClipU"><rect x="0" y="0" width="${FW}" height="${zY.toFixed(1)}"/></clipPath><clipPath id="fcClipD"><rect x="0" y="${zY.toFixed(1)}" width="${FW}" height="${(CH - zY).toFixed(1)}"/></clipPath></defs>
+    <path d="${fArea}" fill="#3d9a68" fill-opacity=".16" clip-path="url(#fcClipU)"/><path d="${fArea}" fill="#d0463f" fill-opacity=".18" clip-path="url(#fcClipD)"/>
+    <line x1="0" x2="${FW}" y1="${zY.toFixed(1)}" y2="${zY.toFixed(1)}" stroke="#cfc6b6" stroke-width="1.5" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>
+    <path d="${fPath}" fill="none" stroke="#2f9a5c" stroke-width="2.5" stroke-linecap="round" vector-effect="non-scaling-stroke" clip-path="url(#fcClipU)"/>
+    <path d="${fPath}" fill="none" stroke="#d0463f" stroke-width="2.5" stroke-linecap="round" vector-effect="non-scaling-stroke" clip-path="url(#fcClipD)"/>`;
   root.innerHTML = `
     <div class="kc-card fc2">
       <div class="fc2-pill"><button type="button" id="fcAccBtn">${escapeHtml(acc.name)}${accs.length > 1 ? ' <span>⌄</span>' : ''}</button></div>
@@ -2155,7 +2176,7 @@ function renderForecastSub() {
       <div class="fc2-chart" id="fcChart" style="height:${CH + 26}px">
         ${todayIdx >= 0 ? `<span class="fc2-today" style="left:${(todayIdx + 0.5) / N * 100}%">Aujourd'hui</span><i class="fc2-line gold" style="left:${(todayIdx + 0.5) / N * 100}%"></i>` : ''}
         <i class="fc2-line" id="fcLine" style="left:50%;display:none"></i>
-        <div class="fc2-bars" style="height:${CH}px">${days.map(x => `<div class="c" data-k="${x.k}"><div class="u" style="height:${topH}px">${x.v > 0 ? `<i class="${x.kind}" style="height:${Math.max(3, x.v * sc)}px"></i>` : ''}</div><div class="dn" style="height:${botH}px">${x.v < 0 ? `<i class="${x.kind}" style="height:${Math.max(3, -x.v * sc)}px"></i>` : ''}</div></div>`).join('')}</div>
+        <svg class="fc2-svg" viewBox="0 0 ${FW} ${CH}" preserveAspectRatio="none" style="height:${CH}px">${fcSvg}</svg>${fDots}
         <div class="fc2-x">${days.map((x, i) => `<span>${tick(i) ? x.d : ''}</span>`).join('')}</div>
       </div>
       <div id="fcDay">${dayCard(sel || tk)}</div>
@@ -2170,7 +2191,7 @@ function renderForecastSub() {
   const btn = document.getElementById('fcAccBtn');
   btn.onclick = () => { if (accs.length < 2) return; const i = accs.findIndex(a => a.id === acc.id); state.fcAcc = accs[(i + 1) % accs.length].id; state.fcSel = null; renderForecastSub(); };
   // glisser le doigt pour naviguer entre les jours
-  const chart = document.getElementById('fcChart'), cols = [...chart.querySelectorAll('.c')], line = document.getElementById('fcLine');
+  const chart = document.getElementById('fcChart'), line = document.getElementById('fcLine');
   const lv = document.getElementById('fcLv'), lb = document.getElementById('fcLb');
   let shown = nowBal;
   const apply = k => {
@@ -3574,9 +3595,9 @@ function renderRegular() {
   root.innerHTML = '';
   if (!list.length) root.innerHTML = `<div class="empty-state">Aucun${inc ? ' revenu' : 'e dépense'} régulier${inc ? '' : 'e'} pour l'instant.</div>`;
   const groups = {};
-  list.forEach(p => (groups[p.cat] = groups[p.cat] || []).push(p));
+  list.forEach(p => { const k = inc ? p.cat : grpOf(findCat(p.cat)); (groups[k] = groups[k] || []).push(p); });
   Object.entries(groups).sort((a, b) => b[1].reduce((s, p) => s + p.amount, 0) - a[1].reduce((s, p) => s + p.amount, 0)).forEach(([cid, items]) => {
-    const c = findCat(cid);
+    const c = inc ? findCat(cid) : groupById(cid);
     const g = document.createElement('div');
     g.className = 'reg-group ' + (inc ? 'inc' : 'exp');
     g.style.background = c.color + '26';
@@ -3584,7 +3605,8 @@ function renderRegular() {
     items.sort((a, b) => b.amount - a.amount).forEach(p => {
       const el = document.createElement('div');
       el.className = 'reg-item';
-      el.innerHTML = `<div class="rmain"><span class="kc-ico" style="background:${c.color}">${c.icon}</span><div class="ri"><div class="rn">${escapeHtml(p.label || c.label)}</div><span class="rc">${freqText(p)}</span></div><div class="ra">${eurS(p.amount)}</div></div>
+      const pc = findCat(p.cat);
+      el.innerHTML = `<div class="rmain"><span class="kc-ico" style="background:${c.color}">${pc.icon}</span><div class="ri"><div class="rn">${escapeHtml(p.label || pc.label)}</div><span class="rc">${freqText(p)}</span></div><div class="ra">${eurS(p.amount)}</div></div>
         <div class="acts"><button class="edit">Modifier</button><button class="del">Supprimer</button></div>`;
       el.querySelector('.rmain').onclick = () => el.classList.toggle('open');
       el.querySelector('.edit').onclick = () => openWizard(p.type, p.id, true);
