@@ -59,10 +59,10 @@ body::before{content:"";position:fixed;inset:-20%;z-index:0;pointer-events:none;
   filter:blur(20px)}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none;padding:0}
-.app{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:calc(var(--safe-t) + 70px) 14px calc(var(--safe-b) + 124px)}
+.app{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:calc(var(--safe-t) + 90px) 14px calc(var(--safe-b) + 124px)}
 /* top bar */
-.top{position:fixed;top:0;left:0;right:0;z-index:20;padding:calc(var(--safe-t) + 10px) 14px 10px;
-  background:linear-gradient(var(--bg) 55%,var(--top-fade));}
+.top{position:fixed;top:0;left:0;right:0;z-index:20;padding:calc(var(--safe-t) + 24px) 14px 12px;
+  background:linear-gradient(var(--bg) 78%,var(--top-fade));}
 .top-in{max-width:520px;margin:0 auto;display:flex;align-items:center;gap:10px}
 .logo{width:34px;height:34px;border-radius:11px;background:var(--acc);display:grid;place-items:center;color:var(--acc-ink)}
 .top h1{font-size:17px;font-weight:500;margin:0;flex:1;letter-spacing:.1px}
@@ -190,6 +190,8 @@ a.btn{color:inherit;text-decoration:none}
 .empty{text-align:center;color:var(--mut);padding:30px 10px;font-size:14px}
 .ring-legend{display:flex;justify-content:space-between;font-size:14px;padding:5px 0}
 .hidden{display:none!important}
+.tx.txb{border:1px solid color-mix(in srgb,var(--cc) 45%,transparent);background:color-mix(in srgb,var(--cc) 6%,transparent);padding:10px 12px;margin:0 0 7px;border-radius:16px}
+.tx.txb .ico{border:0}
 .orow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14.5px}
 .orow.off span{color:var(--dim)}
 .orow .iconbtn{width:36px;height:36px}
@@ -619,7 +621,7 @@ function renderNav(){
 }
 function txRow(t){
   const c=CATS[t.c]||CATS.autre;
-  return `<button class="tx" data-tx="${t.id}"><div class="ico" style="color:${c.c}">${icon(c.i)}</div>
+  return `<button class="tx txb" style="--cc:${c.c}" data-tx="${t.id}"><div class="ico" style="color:${c.c}">${icon(c.i)}</div>
   <div class="t"><div class="m">${esc(t.m)}</div><div class="d">${t.d>ds(TODAY())?'<span style="color:var(--amber)">Prévue</span> · ':''}${shortDate(t.d)} · ${c.n} · ${METHODS[t.p]||''}${t.n?' · '+esc(t.n):''}</div></div>
   <div class="a num ${t.a>0?'pos':''}">${sgn(t.a)}</div></button>`;
 }
@@ -653,7 +655,7 @@ function recurring(){
 function vRecurring(){
   const rec=recurring(),out=rec.filter(r=>r.a<0&&!isTr(r)).reduce((s,r)=>s-r.a,0),inn=rec.filter(r=>r.a>0&&!isTr(r)).reduce((s,r)=>s+r.a,0),tr=rec.filter(isTr).reduce((s,r)=>s-r.a,0);
   return `<div class="row num mut" style="font-size:12.5px;gap:14px;padding:0 4px 6px;flex-wrap:wrap"><span>Par mois : charges <span style="color:var(--amber)">−${eur0(out)}</span></span><span>revenus <span class="pos">+${eur0(inn)}</span></span>${tr?`<span>épargne ${eur0(tr)}</span>`:''}</div>
-  ${rec.length?rec.map(r=>{const c=CATS[r.c]||CATS.autre;return`<button class="tx" data-rec="${esc(r.id)}"><div class="ico" style="color:${c.c}">${icon(c.i)}</div>
+  ${rec.length?rec.map(r=>{const c=CATS[r.c]||CATS.autre;return`<button class="tx txb" style="--cc:${c.c}" data-rec="${esc(r.id)}"><div class="ico" style="color:${c.c}">${icon(c.i)}</div>
    <div class="t"><div class="m">${esc(r.m)}${r.auto?' <span class="badge" style="font-size:10px">auto</span>':''}</div><div class="d">Le ${r.day} de chaque mois · ${c.n}</div></div>
    <div class="a num ${r.a>0?'pos':''}">${sgn(r.a)}</div></button>`}).join(''):'<div class="empty">Aucune opération récurrente. Ajoutez votre loyer, vos abonnements…</div>'}
   <p class="sub" style="padding:10px 4px;font-size:11.5px;line-height:1.45">« auto » : repérée dans vos 3 derniers mois. Touchez une ligne pour la modifier ou la retirer. Ces opérations alimentent la prévision de l'accueil.</p>`;
@@ -666,7 +668,7 @@ function openRec(id){
     const cats=kind==='in'?IN_CATS:kind==='tr'?['transfert']:OUT_CATS;if(!cats.includes(f.c)){f.c=cats[0];if(kind!=='out')f.p='virement'}
     const sign=kind==='in'||(kind==='tr'&&dir==='in')?1:-1;
     openSheet(`<div class="row"><p class="h sp" style="font-size:18px">${isNew?'Nouvelle récurrente':'Opération récurrente'}</p><button class="iconbtn" id="sx">${icon('x')}</button></div>
-    <div class="seg">${[['out','Dépense'],['in','Revenu'],['tr','Transfert']].map(([k,l])=>`<button data-k="${k}" class="${kind===k?'on':''}">${l}</button>`).join('')}</div>
+    <div class="seg">${[['out','Dépense'],['in','Revenu'],...(kind==='tr'?[['tr','Transfert']]:[])].map(([k,l])=>`<button data-k="${k}" class="${kind===k?'on':''}">${l}</button>`).join('')}</div>
     <input class="amt num ${sign>0?'pos':''}" id="rA" inputmode="decimal" placeholder="0,00 €" value="${f.a?Math.abs(f.a).toFixed(2).replace('.',','):''}">
     ${kind==='tr'?`<label class="lbl">Sens</label><div class="seg" style="margin:0">${[['out','Envoyé vers'],['in','Reçu de']].map(([k,l])=>`<button data-dir="${k}" class="${dir===k?'on':''}">${l}</button>`).join('')}</div>`:''}
     <label class="lbl">${kind==='tr'?'Compte':'Libellé'}</label><input class="field" id="rM" value="${esc(f.m)}" placeholder="${kind==='in'?'Salaire…':kind==='tr'?'Livret A…':'Loyer, abonnement…'}">
@@ -760,7 +762,7 @@ function upcomingCard(){
   const H=v=>UI.hide?'••••':v;
   return `<div class="card" style="padding:14px 12px 8px"><div style="padding:2px 4px 6px"><p class="h">À venir ce mois-ci</p>
    <p class="sub num">${ev.length?`${ev.length} opération${ev.length>1?'s':''} à venir · <span style="color:var(--amber)">−${H(eur0(out))}</span>${inn?` · <span class="pos">+${H(eur0(inn))}</span>`:''}`:'Rien de prévu d\'ici la fin du mois'}</p></div>
-   ${ev.map(e=>{const c=CATS[e.c]||CATS.autre,d=pd(e.d),n=Math.round((d-t)/864e5);return`<button class="tx" ${e.planned?`data-tx="${e.id}"`:'style="cursor:default"'}><div class="ico" style="color:${c.c}">${icon(c.i)}</div>
+   ${ev.map(e=>{const c=CATS[e.c]||CATS.autre,d=pd(e.d),n=Math.round((d-t)/864e5);return`<button class="tx txb" style="--cc:${c.c};${e.planned?'':'cursor:default'}" ${e.planned?`data-tx="${e.id}"`:''}><div class="ico" style="color:${c.c}">${icon(c.i)}</div>
     <div class="t"><div class="m">${esc(e.m)}</div><div class="d">${JOURS[d.getDay()]} ${shortDate(e.d)} · ${n===1?'demain':'dans '+n+' j'} · ${e.planned?'prévue':'récurrente'}</div></div>
     <div class="a num ${e.a>0?'pos':''}">${UI.hide?'••••':sgn(e.a)}</div></button>`}).join('')}
    <p class="sub" style="padding:6px 4px 4px;font-size:11.5px">Opérations saisies à une date future et opérations récurrentes.</p></div>`;
@@ -1167,7 +1169,7 @@ function openTx(tx){
     const cats=kind==='in'?IN_CATS:kind==='tr'?['transfert']:OUT_CATS;if(!cats.includes(f.c)){f.c=cats[0];if(kind==='tr'||kind==='in')f.p='virement'}
     const sign=kind==='in'||(kind==='tr'&&dir==='in')?1:-1;
     openSheet(`<div class="row"><p class="h sp" style="font-size:18px">${isNew?'Nouvelle opération':'Modifier'}</p><button class="iconbtn" id="sx">${icon('x')}</button></div>
-    <div class="seg">${[['out','Dépense'],['in','Revenu'],['tr','Transfert']].map(([k,l])=>`<button data-k="${k}" class="${kind===k?'on':''}">${l}</button>`).join('')}</div>
+    <div class="seg">${[['out','Dépense'],['in','Revenu'],...(kind==='tr'?[['tr','Transfert']]:[])].map(([k,l])=>`<button data-k="${k}" class="${kind===k?'on':''}">${l}</button>`).join('')}</div>
     <input class="amt num ${sign>0?'pos':''}" id="fA" inputmode="decimal" placeholder="0,00 €" value="${f.a?Math.abs(f.a).toFixed(2).replace('.',','):''}">
     ${kind==='tr'?`<label class="lbl">Sens</label><div class="seg" style="margin:0">${[['out','Envoyé vers'],['in','Reçu de']].map(([k,l])=>`<button data-dir="${k}" class="${dir===k?'on':''}">${l}</button>`).join('')}</div>`:''}
     <label class="lbl">${kind==='in'?'Provenance':kind==='tr'?'Compte':'Commerçant ou libellé'}</label><input class="field" id="fM" list="mlist" value="${esc(f.m)}" placeholder="${kind==='in'?'Salaire, remboursement…':kind==='tr'?'Livret A, compte joint…':'Boulangerie, loyer…'}">
