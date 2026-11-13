@@ -74,6 +74,7 @@ button{cursor:pointer;border:0;background:none;padding:0}
 .mnav button:disabled{opacity:.25}
 .mnav .mlab{font-size:19px;padding:0 4px;min-width:0;color:var(--txt);font-weight:500}
 .mnav .mlab.off{color:var(--txt);background:var(--card2);border:1px solid var(--line);padding:0 10px;height:34px}
+.hper{display:flex;align-items:center;gap:4px;font-size:17px;font-weight:500;color:var(--txt);padding:0 10px;height:34px;border-radius:12px;background:var(--card2);border:1px solid var(--line);margin-left:4px;white-space:nowrap;overflow:hidden;min-width:0}
 .tmonth{font-weight:500;color:var(--txt);margin-left:8px;font-size:19px}
 .iconbtn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--card2);border:1px solid var(--line)}
 .iconbtn.acc{background:var(--acc);color:var(--acc-ink);border:0}
@@ -107,10 +108,10 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stro
 .seg{display:flex;background:var(--seg);border:1px solid var(--line);border-radius:14px;padding:4px;margin:14px 0 12px}
 .seg button{flex:1;padding:9px 4px;border-radius:10px;font-size:13px;color:var(--mut)}
 .seg button.on{background:var(--acc);color:var(--acc-ink);font-weight:500}
-.tabs{display:flex;gap:22px;border-bottom:1px solid var(--line);margin:0 0 16px}
-.tabs button{padding:10px 0;font-size:14px;color:var(--mut);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs{display:flex;gap:8px;justify-content:space-between;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);margin:0 0 16px}
+.tabs button{white-space:nowrap;flex:none;padding:10px 0;font-size:13.5px;color:var(--mut);border-bottom:2px solid transparent;margin-bottom:-1px}
 .tabs button.on{color:var(--txt);border-color:var(--pos)}
-.badge{display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:9px;background:var(--card2);font-size:11px;margin-left:5px;padding:0 5px}
+.badge{display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:9px;background:var(--card2);font-size:10.5px;margin-left:3px;padding:0 4px;min-width:16px;height:16px}
 /* buttons */
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border-radius:14px;background:var(--card2);border:1px solid var(--line);font-size:14px}
 .btn.acc{background:var(--acc);color:var(--acc-ink);border:0;font-weight:500}
@@ -182,9 +183,9 @@ a.btn{color:inherit;text-decoration:none}
 .toast button{color:var(--acc);font-weight:500}
 .banner{display:flex;gap:10px;align-items:center;background:var(--acc-soft);border:1px solid color-mix(in srgb,var(--acc) 35%,transparent);border-radius:16px;padding:12px 14px;font-size:13px;margin-bottom:12px}
 .hero{padding:20px 18px}
-.hero .bal{font-size:32px;letter-spacing:-.8px;margin:2px 0 4px}
+.hero .bal{white-space:nowrap;font-size:32px;letter-spacing:-.8px;margin:2px 0 4px}
 .balrow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:10px 0 6px}
-.eom{text-align:right;padding-left:12px;border-left:1px solid var(--line)}
+.eom{white-space:nowrap;text-align:right;padding-left:12px;border-left:1px solid var(--line)}
 .heat{display:grid;gap:5px;font-size:10.5px;color:var(--mut)}
 .heat i{display:block;height:11px;border-radius:6px}
 .empty{text-align:center;color:var(--mut);padding:30px 10px;font-size:14px}
@@ -519,7 +520,7 @@ const Store={
 
 /* ============ state ============ */
 let S=demoData();
-let UI={ymOff:0,route0:1,hide:(()=>{try{return!!localStorage.getItem('seve.hide')}catch(e){return false}})(),route:'operations',opsQ:'',opsKind:'out',opsLimit:60,insTab:'flux',flowP:'year',balP:'90',catP:'this',barSel:null,loading:true};
+let UI={ymOff:0,route0:1,hide:(()=>{try{return!!localStorage.getItem('seve.hide')}catch(e){return false}})(),route:'operations',opsQ:'',opsKind:'all',opsLimit:60,insTab:'flux',flowP:'year',balP:'90',catP:'this',barSel:null,loading:true};
 
 function sorted(){return S.txs}
 function selYM(){const t=TODAY(),d=new Date(t.getFullYear(),t.getMonth()+UI.ymOff,1);return{y:d.getFullYear(),m:d.getMonth(),key:ds(d).slice(0,7),cur:UI.ymOff===0}}
@@ -710,16 +711,42 @@ function forecastEvents(until){
   }
   return ev;
 }
+const HP={mois:'Ce mois','3m':'3 mois','6m':'6 mois','1a':'1 an',prev:'3 mois à venir'};
+function loadHP(){try{const o=JSON.parse(localStorage.getItem('seve.hp')||'null');if(o&&(HP[o.k]||o.k==='custom'))return o}catch(e){}return{k:'mois'}}
+function homeRange(){
+  const t=TODAY(),hp=UI.hp||(UI.hp=loadHP()),eom=(n)=>new Date(t.getFullYear(),t.getMonth()+1+(n||0),0),back=m=>new Date(t.getFullYear(),t.getMonth()-m,t.getDate());
+  let f,e;
+  if(hp.k==='3m'){f=back(3);e=eom()}else if(hp.k==='6m'){f=back(6);e=eom()}else if(hp.k==='1a'){f=back(12);e=eom()}
+  else if(hp.k==='prev'){f=addD(t,-14);e=eom(2)}else if(hp.k==='custom'&&hp.from&&hp.to){f=pd(hp.from);e=pd(hp.to);if(e<f)[f,e]=[e,f]}
+  else{f=new Date(t.getFullYear(),t.getMonth(),1);e=eom()}
+  if(f>t)f=new Date(t);if((e-f)/864e5<2)e=addD(f,2);
+  return{from:f,to:e};
+}
+function hpLabel(){const hp=UI.hp||(UI.hp=loadHP());if(hp.k!=='custom')return HP[hp.k]||'Ce mois';const r=homeRange(),f=d=>`${pad(d.getDate())}/${pad(d.getMonth()+1)}`;return `${f(r.from)} – ${f(r.to)}`}
 function homeSeries(){
-  const t=TODAY();let end=new Date(t.getFullYear(),t.getMonth()+1,0);
-  if((end-t)/864e5<10)end=new Date(t.getFullYear(),t.getMonth()+2,0);
-  const past=balanceSeries(35).map(p=>({...p,ev:S.txs.filter(x=>x.d===p.d)}));
-  const ev=upcomingEvents(end),pts=[...past];let b=past[past.length-1].v;
-  for(let d=addD(t,1);d<=end;d=addD(d,1)){const s=ds(d),e=ev.filter(x=>x.d===s);e.forEach(x=>b+=x.a);pts.push({d:s,v:b,f:1,ev:e})}
-  return{pts,ti:past.length-1};
+  const t=TODAY(),ts=ds(t),{from,to}=homeRange(),fs=ds(from),pe=to<t?to:t,pes=ds(pe);
+  let b=S.meta.start||0;const byDay={};
+  for(const x of S.txs){if(x.d<fs)b+=x.a;else if(x.d<=pes)(byDay[x.d]=byDay[x.d]||[]).push(x)}
+  const pts=[];
+  for(let d=new Date(from);d<=pe;d=addD(d,1)){const s0=ds(d),e=byDay[s0]||[];e.forEach(x=>b+=x.a);pts.push({d:s0,v:b,ev:e})}
+  const ti=pts.length-1;
+  if(to>t){const ev=upcomingEvents(to);for(let d=addD(t,1);d<=to;d=addD(d,1)){const s0=ds(d),e=ev.filter(x=>x.d===s0);e.forEach(x=>b+=x.a);pts.push({d:s0,v:b,f:1,ev:e})}}
+  return{pts,ti,today:ds(pe)===ts};
+}
+function openPeriod(){
+  const hp=UI.hp||loadHP(),r=homeRange();
+  openSheet(`<div class="row"><div class="sp"><p class="h" style="font-size:18px">Période de la courbe</p><p class="sub">Choisissez ce que la courbe du solde affiche.</p></div><button class="iconbtn" id="sx">${icon('x')}</button></div>
+  <div class="chips" style="margin-top:14px">${Object.entries(HP).map(([k,l])=>`<button class="chip ${hp.k===k?'on':''}" data-hp="${k}" style="${hp.k===k?'':'color:var(--txt)'}">${l}</button>`).join('')}</div>
+  <label class="lbl" style="margin-top:18px">Période précise</label>
+  <div class="pair"><div><label class="lbl" style="margin-top:0">Du</label><input class="field" type="date" id="pF" value="${hp.k==='custom'?hp.from:ds(r.from)}"></div><div><label class="lbl" style="margin-top:0">Au</label><input class="field" type="date" id="pT" value="${hp.k==='custom'?hp.to:ds(r.to)}"></div></div>
+  <button class="btn acc" id="pOk" style="margin-top:16px">Afficher cette période</button>`);
+  const set=o=>{UI.hp=o;try{localStorage.setItem('seve.hp',JSON.stringify(o))}catch(e){}closeSheet();render(true)};
+  $('#sx').onclick=closeSheet;
+  $('#sheet').querySelectorAll('[data-hp]').forEach(b=>b.onclick=()=>set({k:b.dataset.hp}));
+  $('#pOk').onclick=()=>{const f=$('#pF').value,t=$('#pT').value;if(!f||!t)return;set({k:'custom',from:f<=t?f:t,to:f<=t?t:f})};
 }
 function homeChart(){
-  const {pts,ti}=homeSeries(),W=340,H=150,T=26,B=8;
+  const {pts,ti,today}=homeSeries(),W=340,H=150,T=26,B=8;
   const vs=pts.map(p=>p.v);let lo=Math.min(...vs),hi=Math.max(...vs);const sp=(hi-lo)||1000;lo-=sp*.1;hi+=sp*.1;
   const x=k=>W*k/(pts.length-1),y=v=>T+(H-T-B)*(1-(v-lo)/(hi-lo));
   const pl=pts.slice(0,ti+1).map((p,k)=>`${k?'L':'M'}${x(k).toFixed(1)},${y(p.v).toFixed(1)}`).join('');
@@ -727,12 +754,13 @@ function homeChart(){
   let g=`<defs><linearGradient id="hg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" style="stop-color:var(--acc);stop-opacity:.24"/><stop offset="1" style="stop-color:var(--acc);stop-opacity:0"/></linearGradient></defs>
   <path d="${pl}L${x(ti)},${H}L0,${H}Z" fill="url(#hg)"/><path d="${pl}" fill="none" stroke="var(--acc)" stroke-width="2" stroke-linejoin="round"/>
   <path d="${fl}" fill="none" stroke="var(--acc)" stroke-width="2" stroke-dasharray="2 5" stroke-linecap="round" opacity=".8"/>
-  <line x1="${x(ti)}" x2="${x(ti)}" y1="${T-4}" y2="${H}" stroke="var(--line)" stroke-width="1.5"/>
-  <rect x="${x(ti)-27}" y="2" width="54" height="17" rx="8.5" style="fill:var(--card2)" stroke="var(--line)"/><text x="${x(ti)}" y="14" text-anchor="middle" class="ax" style="fill:var(--mut)">Aujourd'hui</text>`;
+  ${today?`<line x1="${x(ti)}" x2="${x(ti)}" y1="${T-4}" y2="${H}" stroke="var(--line)" stroke-width="1.5"/>
+  <rect x="${Math.min(Math.max(x(ti)-27,0),W-54)}" y="2" width="54" height="17" rx="8.5" style="fill:var(--card2)" stroke="var(--line)"/><text x="${Math.min(Math.max(x(ti),27),W-27)}" y="14" text-anchor="middle" class="ax" style="fill:var(--mut)">Aujourd'hui</text>`:''}`;
   pts.forEach((p,k)=>{if(!p.ev.length)return;const inc=p.f?p.ev.some(e=>e.a>0):p.ev.some(e=>e.a>0&&!isTr(e));if(!p.f&&!inc)return;g+=`<circle cx="${x(k)}" cy="${y(p.v)}" r="${p.f?4:3.5}" fill="${inc?'var(--pos)':'var(--amber)'}" stroke="var(--bg)" stroke-width="1.5"/>`});
   g+=`<line class="cur" x1="0" x2="0" y1="${T}" y2="${H}" stroke="var(--dim)" stroke-dasharray="3 3" opacity="0"/><circle class="curd" r="5" style="fill:var(--txt)" stroke="var(--bg)" stroke-width="2" opacity="0"/><rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
   const last=pts[pts.length-1];
   return {html:`<div class="chart" id="homeChart" style="margin-top:14px;touch-action:pan-y"><svg viewBox="0 0 ${W} ${H}">${g}</svg><div class="tip"></div></div>
+  <div class="row num" style="font-size:11px;color:var(--dim);margin-top:4px"><span class="sp">${shortDate(pts[0].d)}${pd(pts[0].d).getFullYear()!==pd(last.d).getFullYear()?' '+pd(pts[0].d).getFullYear():''}</span><span>${shortDate(last.d)}${pd(pts[0].d).getFullYear()!==pd(last.d).getFullYear()?' '+pd(last.d).getFullYear():''}</span></div>
   <div class="row" style="font-size:11.5px;color:var(--mut);margin-top:10px;flex-wrap:wrap;gap:12px">
    <span><i class="dot" style="background:var(--acc);border-radius:2px;height:3px;width:12px"></i>Solde</span>
    <span><i class="dot" style="border-top:2px dotted var(--acc);border-radius:0;height:0;width:12px;background:none"></i>Prévision</span>
@@ -772,7 +800,7 @@ function spentSince(from){const td=ds(TODAY());let o=0;S.txs.forEach(x=>{if(x.a<
 function vAccueil(){
   const t=TODAY(),bal=balanceAt(ds(t));
   const prev=balanceAt(ds(addD(t,-30))),delta=bal-prev,pct=prev?delta/Math.abs(prev)*100:0;
-  const hc=homeChart();UI._hc=hc;const endP=hc.pts[hc.pts.length-1];
+  const hc=homeChart();UI._hc=hc;const endP=hc.pts[hc.pts.length-1],refV=endP.f?bal:hc.pts[0].v;
   const bud=budgetRows().sort((a,b)=>b.ratio-a.ratio).slice(0,3);
   const recent=S.txs.filter(x=>x.d<=ds(TODAY())).slice(0,5),goals=S.meta.goals||[];
   const H=v=>UI.hide?'••••':eur0(v);
@@ -783,8 +811,8 @@ function vAccueil(){
      <button class="iconbtn" data-act="hide" aria-label="Masquer le solde" style="width:36px;height:36px">${icon(UI.hide?'eye':'eyeoff','style="width:17px;height:17px"')}</button></div>
     <div class="balrow">
      <div><div class="mut" style="font-size:12px">Aujourd'hui</div><div class="bal num">${UI.hide?'•••• €':eur(bal)}</div></div>
-     <div class="eom"><div class="mut" style="font-size:12px">Fin de mois · ${shortDate(endP.d)}</div><div class="num" style="font-size:22px;letter-spacing:-.4px;margin-top:6px">${UI.hide?'•••• €':eur0(endP.v)}</div>
-      <div class="num" style="font-size:12px;margin-top:2px;color:${endP.v-bal>=0?'var(--pos)':'var(--amber)'}">${UI.hide?'':(endP.v-bal>=0?'+':'−')+eur0(Math.abs(endP.v-bal))+' prévus'}</div></div>
+     <div class="eom"><div class="mut" style="font-size:12px">${endP.d===ds(new Date(TODAY().getFullYear(),TODAY().getMonth()+1,0))?'Fin de mois · '+shortDate(endP.d):'Au '+shortDate(endP.d)}</div><div class="num" style="font-size:22px;letter-spacing:-.4px;margin-top:6px">${UI.hide?'•••• €':eur0(endP.v)}</div>
+      <div class="num" style="font-size:12px;margin-top:2px;color:${endP.v-refV>=0?'var(--pos)':'var(--amber)'}">${UI.hide?'':(endP.v-refV>=0?'+':'−')+eur0(Math.abs(endP.v-refV))+(endP.f?' prévus':' sur la période')}</div></div>
     </div>
     <div class="row" style="font-size:12px;gap:8px"><span class="pill ${delta<0?'over':''}" style="padding:3px 8px">${delta>=0?'↑':'↓'} ${Math.abs(pct).toFixed(0)} %</span><span class="mut">par rapport à il y a un mois</span></div>
     <div class="mut" style="font-size:12px;margin:14px 0 7px">Dépensé</div>
@@ -910,17 +938,17 @@ function stepGoal(id,v){
 }
 
 function filteredOps(){
-  const k=selYM().key;return S.txs.filter(t=>mkey(t.d)===k&&(UI.opsKind==='in'?t.a>0:t.a<0)&&(!UI.opsQ||t.m===UI.opsQ));
+  const k=selYM().key;return S.txs.filter(t=>mkey(t.d)===k&&(UI.opsKind==='all'||(UI.opsKind==='in'?t.a>0:t.a<0))&&(!UI.opsQ||t.m===UI.opsQ));
 }
 function vOperations(){
-  if(!['out','in','rec'].includes(UI.opsKind))UI.opsKind='out';
-  const isRec=UI.opsKind==='rec',list=isRec?[]:filteredOps(),mk=selYM().key,mtx=S.txs.filter(t=>mkey(t.d)===mk),all=sumBy(mtx),cnt={out:0,in:0,rec:recurring().length};mtx.forEach(t=>cnt[t.a>0?'in':'out']++);
+  if(!['all','out','in','rec'].includes(UI.opsKind))UI.opsKind='all';
+  const isRec=UI.opsKind==='rec',list=isRec?[]:filteredOps(),mk=selYM().key,mtx=S.txs.filter(t=>mkey(t.d)===mk),all=sumBy(mtx),cnt={all:mtx.length,out:0,in:0,rec:recurring().length};mtx.forEach(t=>cnt[t.a>0?'in':'out']++);
   return `<button class="btn acc" data-act="${isRec?'newRec':'newTx'}" style="margin-bottom:12px">${icon('x','style="transform:rotate(45deg)"')} ${isRec?'Nouvelle récurrente':'Nouvelle opération'}</button>
   <div class="grid2">
    <div class="tile" style="min-height:0"><div class="lab">${icon('down')} Entrées</div><div class="val num pos" style="margin-bottom:0">${eur0(all.i)}</div></div>
    <div class="tile" style="min-height:0"><div class="lab">${icon('up')} Sorties</div><div class="val num" style="margin-bottom:0">${eur0(all.o)}</div></div>
   </div>
-  <div class="tabs">${[['out','Dépenses'],['in','Revenus'],['rec','Récurrentes']].map(([k,l])=>`<button data-ok="${k}" class="${UI.opsKind===k?'on':''}">${l}<span class="badge">${cnt[k]}</span></button>`).join('')}</div>
+  <div class="tabs">${[['all','Tout'],['out','Dépenses'],['in','Revenus'],['rec','Récurrentes']].map(([k,l])=>`<button data-ok="${k}" class="${UI.opsKind===k?'on':''}">${l}<span class="badge">${cnt[k]}</span></button>`).join('')}</div>
   ${UI.opsQ?`<div class="row" style="margin-bottom:6px"><button class="chip on" data-act="clearQ">${esc(UI.opsQ)} ${icon('x','style="width:13px;height:13px"')}</button></div>`:''}
   ${isRec?vRecurring():`<div id="opsList">${list.length?groupList(list.slice(0,UI.opsLimit)):`<div class="empty">Aucune opération en ${ymLabel(selYM()).toLowerCase()}.</div>`}</div>`}
   ${list.length>UI.opsLimit?`<button class="btn" data-act="more" style="margin-top:12px">Afficher plus (${list.length-UI.opsLimit} restantes)</button>`:''}`;
@@ -1055,7 +1083,7 @@ function openIncome(){
   $('#iOk').onclick=()=>{const v=parseAmt($('#iA').value);if(!(v>=0)){$('#iA').focus();return}S.meta.income=Math.round(v*100)/100;Store.saveMeta();closeSheet();render(true);toast('Revenu mensuel enregistré')};
 }
 function vBudgets(){
-  const t=TODAY(),o=selYM(),dim=daysIn(o.y,o.m),rows=budgetRows(o),day=o.cur?t.getDate():dim;
+  const t=TODAY(),o={y:t.getFullYear(),m:t.getMonth(),cur:true},dim=daysIn(o.y,o.m),rows=budgetRows(o),day=o.cur?t.getDate():dim;
   const tb=rows.reduce((s,r)=>s+r.lim,0),ts=rows.reduce((s,r)=>s+r.spent,0),left=tb-ts,dl=o.cur?dim-t.getDate()+1:0;
   const nOver=rows.filter(r=>r.st==='over').length,nWarn=rows.filter(r=>r.st==='warn').length;
   const status=!rows.length?'Aucun budget pour l\'instant.':nOver?`${nOver} budget${nOver>1?'s':''} dépassé${nOver>1?'s':''}.`:nWarn?`${nWarn} budget${nWarn>1?'s':''} à surveiller.`:'Tous les budgets tiennent le rythme.';
@@ -1094,8 +1122,8 @@ function vPlus(){
 function render(keepScroll){
   applyCats();
   const y=window.scrollY;
-  {const nav=['operations','budgets'].includes(UI.route),o=nav?selYM():{...selYM(),...(()=>{const t=TODAY();return{y:t.getFullYear(),m:t.getMonth()}})()};
-   $('#topTitle').innerHTML=`<span class="ttl">${ROUTES[UI.route].t}</span>`+(nav?`<span class="mnav"><button data-mn="-1" aria-label="Mois précédent">‹</button><button data-mn="0" class="mlab ${o.cur?'':'off'}">${ymLabel(o)}</button><button data-mn="1" aria-label="Mois suivant" ${o.cur?'disabled':''}>›</button></span>`:`<span class="tmonth">${ymLabel(o)}</span>`);}
+  {const nav=UI.route==='operations',o=nav?selYM():{...selYM(),...(()=>{const t=TODAY();return{y:t.getFullYear(),m:t.getMonth()}})()};
+   $('#topTitle').innerHTML=`<span class="ttl">${ROUTES[UI.route].t}</span>`+(nav?`<span class="mnav"><button data-mn="-1" aria-label="Mois précédent">‹</button><button data-mn="0" class="mlab ${o.cur?'':'off'}">${ymLabel(o)}</button><button data-mn="1" aria-label="Mois suivant" ${o.cur?'disabled':''}>›</button></span>`:UI.route==='accueil'?`<button class="hper" data-act="period">${hpLabel()}<svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="m6 9 6 6 6-6"/></svg></button>`:'');}
   $('#btnAdd').style.display=['operations','budgets','objectifs'].includes(UI.route)?'none':'';
   const v={accueil:vAccueil,operations:vOperations,analyses:vAnalyses,budgets:vBudgets,objectifs:vObjectifs,reglages:vPlus}[UI.route]();
   $('#view').innerHTML=v;renderNav();
@@ -1126,7 +1154,7 @@ document.addEventListener('click',e=>{
   if(d.rec){openRec(d.rec);return}
   if(d.gmove){moveGoal(d.gmove,+d.v);return}
   if(d.gstep){stepGoal(d.gstep,+d.v);return}
-  if(d.merch){UI.opsQ=d.merch;UI.opsKind='out';UI.opsLimit=60;location.hash='operations';return}
+  if(d.merch){UI.opsQ=d.merch;UI.opsKind='all';UI.opsLimit=60;location.hash='operations';return}
   const a=d.act;if(!a)return;
   if(a==='hide'){UI.hide=!UI.hide;try{localStorage.setItem('seve.hide',UI.hide?'1':'')}catch(e){}render(true)}
   if(a==='newGoal')openGoal(null);
@@ -1135,6 +1163,7 @@ document.addEventListener('click',e=>{
   if(a==='homeOrg')openHomeOrg();
   if(a==='cats')openCats('out');
   if(a==='income')openIncome();
+  if(a==='period')openPeriod();
   if(a==='clearQ'){UI.opsQ='';render(true)}
   if(a==='more'){UI.opsLimit+=80;render(true)}
   if(a==='newBudget')openBudget(null);
