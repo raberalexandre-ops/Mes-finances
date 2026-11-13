@@ -162,6 +162,7 @@ a.btn{color:inherit;text-decoration:none}
 /* budgets */
 .pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;padding:4px 9px;border-radius:20px;background:var(--pos-soft);color:var(--pos)}
 .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.run{background:var(--card2);color:var(--mut)}
 .pill.warn{background:color-mix(in srgb,var(--amber) 14%,transparent);color:var(--amber)}
 .pill.over{background:color-mix(in srgb,var(--red) 14%,transparent);color:var(--red)}
 .big{font-size:28px;letter-spacing:-.5px}
@@ -191,6 +192,7 @@ a.btn{color:inherit;text-decoration:none}
 .empty{text-align:center;color:var(--mut);padding:30px 10px;font-size:14px}
 .ring-legend{display:flex;justify-content:space-between;font-size:14px;padding:5px 0}
 .hidden{display:none!important}
+.gdet{margin-top:12px;padding:10px 12px;border-radius:14px;background:var(--card);border:1px solid var(--line)}
 .tx.txb{border:1px solid color-mix(in srgb,var(--cc) 45%,transparent);background:color-mix(in srgb,var(--cc) 6%,transparent);padding:10px 12px;margin:0 0 7px;border-radius:16px}
 .tx.txb .ico{border:0}
 .orow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14.5px}
@@ -467,7 +469,7 @@ function demoData(){
   add(new Date(t.getFullYear(),t.getMonth()-2,18),amt(250,400),'Prime exceptionnelle','revenu','virement');
   txs.sort((a,b)=>b.d.localeCompare(a.d));
   return{txs,meta:{v:1,demo:true,start:4200,income:2700,budgets:{logement:920,courses:420,resto:260,transport:140,factures:160,loisirs:120,shopping:150,abos:40,sante:60},
-   goals:[{id:'g1',n:'Voyage de printemps',i:'plane',col:0,target:3200,saved:1850,auto:250,date:ds(new Date(t.getFullYear(),t.getMonth()+5,15))},{id:'g2',n:'Épargne de précaution',i:'shield',col:1,target:6000,saved:3400,auto:150,date:ds(new Date(t.getFullYear()+1,11,31))},{id:'g3',n:'Vélo de route',i:'bike',col:2,target:1400,saved:520,auto:80,date:ds(new Date(t.getFullYear(),t.getMonth()+4,1))}]}};
+   goals:[{id:'g1',n:'Voyage de printemps',i:'plane',col:0,target:3200,saved:1850,items:[{id:'i1',n:'Train aller-retour',v:180},{id:'i2',n:'Hébergement',v:1400},{id:'i3',n:'Repas',v:900},{id:'i4',n:'Activités et visites',v:450},{id:'i5',n:'Divers',v:270}],date:ds(new Date(t.getFullYear(),t.getMonth()+5,15))},{id:'g2',n:'Épargne de précaution',i:'shield',col:1,target:6000,saved:3400,auto:150,date:ds(new Date(t.getFullYear()+1,11,31))},{id:'g3',n:'Vélo de route',i:'bike',col:2,target:1400,saved:520,auto:80,date:ds(new Date(t.getFullYear(),t.getMonth()+4,1))}]}};
 }
 
 /* ============ storage ============ */
@@ -863,29 +865,62 @@ const GICONS=['plane','shield','bike','home','gift','star','heart','car'];
 const goalCol=g=>GCOL[isLight()?'light':'dark'][g.col||0];
 function goalInfo(g){
   const t=TODAY(),end=pd(g.date),mLeft=Math.max(0,(end-t)/864e5/30.44),left=Math.max(0,g.target-g.saved);
-  const proj=g.saved+(g.auto||0)*mLeft,need=mLeft>0?left/mLeft:left;
-  const st=g.saved>=g.target?'done':proj>=g.target-0.5?'ok':'late';
-  return{mLeft,left,proj,need,st,pct:Math.min(1,g.saved/g.target)};
+  const need=mLeft>=1?left/mLeft:left;
+  const st=g.saved>=g.target?'done':mLeft<=0?'late':'run';
+  return{mLeft,left,need,st,pct:Math.min(1,g.saved/g.target)};
 }
 const longDate=s=>{const d=pd(s);return `${d.getDate()} ${MOISL[d.getMonth()]} ${d.getFullYear()}`};
 function vObjectifs(){
-  const goals=S.meta.goals||[],tot=goals.reduce((s,g)=>s+g.saved,0),tgt=goals.reduce((s,g)=>s+g.target,0),auto=goals.reduce((s,g)=>s+(g.auto||0),0);
+  const goals=S.meta.goals||[],tot=goals.reduce((s,g)=>s+g.saved,0),tgt=goals.reduce((s,g)=>s+g.target,0);
   return `  <button class="btn acc" data-act="newGoal" style="margin-bottom:12px">${icon('x','style="transform:rotate(45deg)"')} Nouvel objectif</button>
   ${goals.length?`<div class="grid2">
    <div class="tile" style="min-height:0"><div class="lab">${icon('piggy')} Mis de côté</div><div class="val num" style="margin-bottom:4px">${eur0(tot)}</div><div class="foot" style="margin-top:0">sur ${eur0(tgt)}</div></div>
-   <div class="tile" style="min-height:0"><div class="lab">${icon('repeat')} Chaque mois</div><div class="val num" style="margin-bottom:4px">${eur0(auto)}</div><div class="foot" style="margin-top:0">${goals.length} objectif${goals.length>1?'s':''}</div></div></div>`:''}
+   <div class="tile" style="min-height:0"><div class="lab">${icon('target')} Reste à épargner</div><div class="val num" style="margin-bottom:4px">${eur0(Math.max(0,tgt-tot))}</div><div class="foot" style="margin-top:0">${goals.length} objectif${goals.length>1?'s':''}</div></div></div>`:''}
   ${goals.map(g=>{const I=goalInfo(g),c=goalCol(g);return`<div class="card goal">
    <div class="tube"><i style="height:${Math.max(6,I.pct*100)}%;background:linear-gradient(180deg,color-mix(in srgb,${c} 70%,#fff 30%),${c})"></i><span class="shine"></span><span class="gi">${icon(g.i)}</span></div>
    <div class="sp" style="min-width:0">
     <div class="row" style="align-items:flex-start"><button class="sp" data-gedit="${g.id}" style="text-align:left;font-size:16px;min-width:0">${esc(g.n)}</button>
-     <span class="pill ${I.st==='late'?'warn':''}">${I.st==='done'?'Atteint':I.st==='ok'?'Dans les temps':'En retard'}</span></div>
+     <span class="pill ${I.st==='late'?'warn':I.st==='run'?'run':''}">${I.st==='done'?'Atteint':I.st==='late'?'Échéance passée':Math.ceil(I.mLeft)+' mois restant'+(Math.ceil(I.mLeft)>1?'s':'')}</span></div>
     <div class="big num" style="margin-top:8px">${eur0(g.saved)}<small>sur ${eur0(g.target)}</small></div>
     <div class="sub">${Math.round(I.pct*100)} % · d'ici le ${longDate(g.date)}</div>
-    <div class="auto"><div class="sp"><div class="mut" style="font-size:12px">Épargne auto</div><div style="font-size:14px">chaque mois</div></div>
-     <div class="step"><button data-gstep="${g.id}" data-v="-25" aria-label="Moins">−</button><span class="num">${eur0(g.auto||0)}</span><button class="acc" data-gstep="${g.id}" data-v="25" aria-label="Plus">+</button></div></div>
-    <p class="sub" style="line-height:1.4">${I.st==='done'?'Objectif atteint, bravo !':I.mLeft<=0?`L'échéance est passée : il manque ${eur0(I.left)}.`:I.st==='ok'?`À ${eur0(g.auto||0)} par mois, vous aurez ${eur0(Math.min(I.proj,g.target))} d'ici là.`:`À ce rythme : ${eur0(I.proj)}. Passez à ${eur0(Math.ceil(I.need/5)*5)} par mois pour y arriver.`}</p>
+    <p class="sub" style="line-height:1.4;margin-top:10px">${I.st==='done'?'Objectif atteint, bravo !':I.st==='late'?`L'échéance est passée : il manque ${eur0(I.left)}.`:`Il reste ${eur0(I.left)} : environ <b style="color:var(--txt);font-weight:500">${eur0(Math.ceil(I.need/5)*5)} par mois</b> pour y arriver.`}</p>
+    ${goalDetail(g)}
     <div class="row" style="margin-top:12px;gap:8px"><button class="btn sm acc" data-gmove="${g.id}" data-v="1">${icon('x','style="transform:rotate(45deg);width:15px;height:15px"')} Ajouter</button><button class="btn sm" data-gmove="${g.id}" data-v="-1">− Retirer</button><span class="sp"></span><button class="iconbtn" data-gedit="${g.id}" aria-label="Modifier" style="width:36px;height:36px">${icon('pen','style="width:16px;height:16px"')}</button></div>
    </div></div>`}).join('')||'<div class="empty">Aucun objectif. Créez-en un : voyage, épargne de précaution, gros achat…</div>'}`;
+}
+function goalDetail(g){
+  const it=g.items||[],open=UI.gOpen&&UI.gOpen[g.id],tot=it.reduce((s,x)=>s+x.v,0);
+  if(!it.length)return `<button class="btn sm" data-gdet="${g.id}" style="margin-top:10px">${icon('x','style="transform:rotate(45deg);width:14px;height:14px"')} Détailler le budget</button>`;
+  return `<div class="gdet"><button class="row" data-gtog="${g.id}" style="width:100%;font-size:13.5px;padding:2px 0"><span class="sp" style="text-align:left">Détail du budget · ${it.length} poste${it.length>1?'s':''}</span><span class="num mut">${eur0(tot)}</span>${icon(open?'up2':'down2','style="width:16px;height:16px;color:var(--mut)"')}</button>
+   ${open?`<div style="margin-top:8px">${it.map(x=>`<div style="margin-top:8px"><div class="row num" style="font-size:13px"><span class="sp">${esc(x.n)}</span><span>${eur0(x.v)}</span><span class="mut" style="min-width:38px;text-align:right">${tot?Math.round(x.v/tot*100):0} %</span></div>
+    <div class="track" style="height:5px;margin-top:5px"><i style="width:${tot?x.v/tot*100:0}%;background:${goalCol(g)}"></i></div></div>`).join('')}
+    ${Math.abs(tot-g.target)>0.5?`<p class="sub" style="margin-top:10px;font-size:12px">${tot>g.target?`Le détail dépasse le montant visé de ${eur0(tot-g.target)}.`:`${eur0(g.target-tot)} non détaillés.`}</p>`:''}
+    <button class="btn sm" data-gdet="${g.id}" style="margin-top:12px">${icon('pen','style="width:14px;height:14px"')} Modifier le détail</button></div>`:''}</div>`;
+}
+function openGoalDetail(id){
+  const g=S.meta.goals.find(x=>x.id===id);let items=(g.items||[]).map(x=>({...x}));if(!items.length)items=[{id:uid(),n:'',v:''}];
+  let sync=g.items&&g.items.length?Math.abs(g.items.reduce((s,x)=>s+x.v,0)-g.target)<0.5:true;
+  const draw=()=>{
+    const tot=items.reduce((s,x)=>s+(parseAmt(x.v)||0),0);
+    openSheet(`<div class="row"><div class="sp"><p class="h" style="font-size:18px">Détail du budget</p><p class="sub">${esc(g.n)} · transport, hébergement, activités…</p></div><button class="iconbtn" id="sx">${icon('x')}</button></div>
+    <div style="margin-top:12px">${items.map((x,i)=>`<div class="row" style="gap:8px;margin-top:8px"><input class="field" data-in="${i}" value="${esc(x.n)}" placeholder="Poste" style="flex:1.6"><input class="field num" data-iv="${i}" inputmode="decimal" value="${x.v===''?'':String(x.v).replace('.',',')}" placeholder="0 €" style="flex:1"><button class="iconbtn" data-ix="${i}" aria-label="Retirer" style="width:36px;height:36px;flex:none">${icon('x','style="width:15px;height:15px"')}</button></div>`).join('')}</div>
+    <button class="btn sm" id="iAdd" style="margin-top:12px">${icon('x','style="transform:rotate(45deg);width:14px;height:14px"')} Ajouter un poste</button>
+    <div class="row num" style="margin-top:16px;font-size:14px"><span class="sp">Total</span><span id="iTot">${eur0(tot)}</span></div>
+    <label class="row" style="margin-top:12px;font-size:13.5px;gap:10px;cursor:pointer"><input type="checkbox" id="iSync" ${sync?'checked':''} style="width:20px;height:20px;accent-color:var(--acc)"><span class="sp">Utiliser ce total comme montant visé <span class="mut">(actuellement ${eur0(g.target)})</span></span></label>
+    <button class="btn acc" id="iOk" style="margin-top:16px">Enregistrer</button>`);
+    const keep=()=>{$('#sheet').querySelectorAll('[data-in]').forEach(e=>items[+e.dataset.in].n=e.value);$('#sheet').querySelectorAll('[data-iv]').forEach(e=>items[+e.dataset.iv].v=e.value);sync=$('#iSync').checked};
+    $('#sx').onclick=closeSheet;
+    $('#sheet').querySelectorAll('[data-iv]').forEach(e=>e.oninput=()=>{keep();$('#iTot').textContent=eur0(items.reduce((s,x)=>s+(parseAmt(x.v)||0),0))});
+    $('#sheet').querySelectorAll('[data-ix]').forEach(b=>b.onclick=()=>{keep();items.splice(+b.dataset.ix,1);draw()});
+    $('#iAdd').onclick=()=>{keep();items.push({id:uid(),n:'',v:''});draw();const l=$('#sheet').querySelectorAll('[data-in]');l[l.length-1].focus()};
+    $('#iOk').onclick=()=>{
+      keep();const clean=items.map(x=>({id:x.id||uid(),n:x.n.trim(),v:Math.round((parseAmt(x.v)||0)*100)/100})).filter(x=>x.n||x.v);
+      clean.forEach(x=>{if(!x.n)x.n='Poste'});
+      const old={...g,items:g.items};g.items=clean;const tot=clean.reduce((s,x)=>s+x.v,0);if(sync&&tot>0)g.target=tot;
+      UI.gOpen={...(UI.gOpen||{}),[g.id]:true};Store.saveMeta();closeSheet();render(true);toast('Détail enregistré');
+    };
+  };
+  draw();
 }
 function openGoal(id){
   const isNew=!id,g=id?{...S.meta.goals.find(x=>x.id===id)}:{id:uid(),n:'',i:'plane',col:0,target:'',saved:0,auto:100,date:ds(new Date(TODAY().getFullYear()+1,TODAY().getMonth(),1))};
@@ -894,18 +929,18 @@ function openGoal(id){
     <label class="lbl">Nom</label><input class="field" id="gN" value="${esc(g.n)}" placeholder="Voyage, fonds d'urgence…">
     <div class="pair"><div><label class="lbl">Montant visé (€)</label><input class="field num" id="gT" inputmode="decimal" value="${g.target}"></div>
     <div><label class="lbl">Échéance</label><input class="field" type="date" id="gD" value="${g.date}"></div></div>
-    <div class="pair"><div><label class="lbl">${isNew?'Déjà de côté':'Mis de côté'} (€)</label><input class="field num" id="gS" inputmode="decimal" value="${g._s??g.saved}"></div><div><label class="lbl">Par mois (€)</label><input class="field num" id="gA" inputmode="decimal" value="${g._a??g.auto}"></div></div>
+    <label class="lbl">${isNew?'Déjà de côté':'Mis de côté'} (€)</label><input class="field num" id="gS" inputmode="decimal" value="${g._s??g.saved}">
     <label class="lbl">Icône</label><div class="chips">${GICONS.map(k=>`<button class="chip ${g.i===k?'on':''}" data-gi="${k}">${icon(k)}</button>`).join('')}</div>
     <label class="lbl">Couleur</label><div class="chips">${GCOL[isLight()?'light':'dark'].map((c,k)=>`<button class="chip ${g.col===k?'on':''}" data-gc="${k}" style="padding:8px"><i style="display:block;width:20px;height:20px;border-radius:50%;background:${c}"></i></button>`).join('')}</div>
     <div class="row" style="margin-top:18px">${isNew?'':`<button class="btn red" id="gDel" style="width:auto;padding:13px 16px">Supprimer</button>`}<button class="btn acc" id="gOk">${isNew?'Créer':'Enregistrer'}</button></div>`);
-    const keep=()=>{g.n=$('#gN').value;g.target=$('#gT').value;g.date=$('#gD').value||g.date;g._s=$('#gS').value;g._a=$('#gA').value};
+    const keep=()=>{g.n=$('#gN').value;g.target=$('#gT').value;g.date=$('#gD').value||g.date;g._s=$('#gS').value};
     $('#sx').onclick=closeSheet;
     $('#sheet').querySelectorAll('[data-gi]').forEach(b=>b.onclick=()=>{keep();g.i=b.dataset.gi;draw()});
     $('#sheet').querySelectorAll('[data-gc]').forEach(b=>b.onclick=()=>{keep();g.col=+b.dataset.gc;draw()});
     $('#gOk').onclick=()=>{
       keep();const T=parseAmt(g.target);if(!g.n.trim()){$('#gN').focus();return}if(!(T>0)){$('#gT').focus();return}
       const o={id:g.id,n:g.n.trim(),i:g.i,col:g.col,target:T,date:g.date,saved:g.saved,auto:g.auto};
-      o.saved=Math.max(0,parseAmt(g._s)||0);o.auto=Math.max(0,parseAmt(g._a)||0);
+      o.saved=Math.max(0,parseAmt(g._s)||0);o.items=g.items||[];
       if(isNew){S.meta.goals=[...(S.meta.goals||[]),o]}
       else S.meta.goals=S.meta.goals.map(x=>x.id===o.id?o:x);
       Store.saveMeta();closeSheet();render(true);toast(isNew?'Objectif créé':'Objectif modifié');
@@ -1153,7 +1188,8 @@ document.addEventListener('click',e=>{
   if(d.gedit){openGoal(d.gedit);return}
   if(d.rec){openRec(d.rec);return}
   if(d.gmove){moveGoal(d.gmove,+d.v);return}
-  if(d.gstep){stepGoal(d.gstep,+d.v);return}
+  if(d.gdet){openGoalDetail(d.gdet);return}
+  if(d.gtog){UI.gOpen={...(UI.gOpen||{}),[d.gtog]:!(UI.gOpen&&UI.gOpen[d.gtog])};render(true);return}
   if(d.merch){UI.opsQ=d.merch;UI.opsKind='all';UI.opsLimit=60;location.hash='operations';return}
   const a=d.act;if(!a)return;
   if(a==='hide'){UI.hide=!UI.hide;try{localStorage.setItem('seve.hide',UI.hide?'1':'')}catch(e){}render(true)}
