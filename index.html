@@ -748,7 +748,7 @@ function openPeriod(){
   $('#pOk').onclick=()=>{const f=$('#pF').value,t=$('#pT').value;if(!f||!t)return;set({k:'custom',from:f<=t?f:t,to:f<=t?t:f})};
 }
 function homeChart(){
-  const {pts,ti,today}=homeSeries(),W=340,H=150,T=26,B=8;
+  const {pts,ti,today}=homeSeries(),W=340,H=250,T=28,B=8;
   const vs=pts.map(p=>p.v);let lo=Math.min(...vs),hi=Math.max(...vs);const sp=(hi-lo)||1000;lo-=sp*.1;hi+=sp*.1;
   const x=k=>W*k/(pts.length-1),y=v=>T+(H-T-B)*(1-(v-lo)/(hi-lo));
   const pl=pts.slice(0,ti+1).map((p,k)=>`${k?'L':'M'}${x(k).toFixed(1)},${y(p.v).toFixed(1)}`).join('');
@@ -761,7 +761,7 @@ function homeChart(){
   pts.forEach((p,k)=>{if(!p.ev.length)return;const inc=p.f?p.ev.some(e=>e.a>0):p.ev.some(e=>e.a>0&&!isTr(e));if(!p.f&&!inc)return;g+=`<circle cx="${x(k)}" cy="${y(p.v)}" r="${p.f?4:3.5}" fill="${inc?'var(--pos)':'var(--amber)'}" stroke="var(--bg)" stroke-width="1.5"/>`});
   g+=`<line class="cur" x1="0" x2="0" y1="${T}" y2="${H}" stroke="var(--dim)" stroke-dasharray="3 3" opacity="0"/><circle class="curd" r="5" style="fill:var(--txt)" stroke="var(--bg)" stroke-width="2" opacity="0"/><rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
   const last=pts[pts.length-1];
-  return {html:`<div class="chart" id="homeChart" style="margin-top:14px;touch-action:pan-y"><svg viewBox="0 0 ${W} ${H}">${g}</svg><div class="tip"></div></div>
+  return {html:`<div class="chart" id="homeChart" style="margin-top:18px;touch-action:pan-y"><svg viewBox="0 0 ${W} ${H}">${g}</svg><div class="tip"></div></div>
   <div class="row num" style="font-size:11px;color:var(--dim);margin-top:4px"><span class="sp">${shortDate(pts[0].d)}${pd(pts[0].d).getFullYear()!==pd(last.d).getFullYear()?' '+pd(pts[0].d).getFullYear():''}</span><span>${shortDate(last.d)}${pd(pts[0].d).getFullYear()!==pd(last.d).getFullYear()?' '+pd(last.d).getFullYear():''}</span></div>
   <div class="row" style="font-size:11.5px;color:var(--mut);margin-top:10px;flex-wrap:wrap;gap:12px">
    <span><i class="dot" style="background:var(--acc);border-radius:2px;height:3px;width:12px"></i>Solde</span>
@@ -817,10 +817,6 @@ function vAccueil(){
       <div class="num" style="font-size:12px;margin-top:2px;color:${endP.v-refV>=0?'var(--pos)':'var(--amber)'}">${UI.hide?'':(endP.v-refV>=0?'+':'−')+eur0(Math.abs(endP.v-refV))+(endP.f?' prévus':' sur la période')}</div></div>
     </div>
     <div class="row" style="font-size:12px;gap:8px"><span class="pill ${delta<0?'over':''}" style="padding:3px 8px">${delta>=0?'↑':'↓'} ${Math.abs(pct).toFixed(0)} %</span><span class="mut">par rapport à il y a un mois</span></div>
-    <div class="mut" style="font-size:12px;margin:14px 0 7px">Dépensé</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-     ${mini("Aujourd'hui",spentSince(ds(t)))}${mini('Cette semaine',spentSince(ds(mondayOf(t))))}${mini('Ce mois',spentSince(ds(new Date(t.getFullYear(),t.getMonth(),1))))}${mini('Cette année',spentSince(ds(new Date(t.getFullYear(),0,1))))}
-    </div>
     ${hc.html}
   </div>`;
   SEC.avenir=upcomingCard();
